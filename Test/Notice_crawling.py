@@ -14,7 +14,7 @@ for i in range(1,5): #i = 공지사항 페이지 우선 5번째 페이지 까지
         arr.append(title['title'])
 
 
-for data in arr:  # 공지사항 제목안에 키워드 입력 시 그 데이터만 제공 ==data
+for data in arr:  # 공지사항 키워드 입력 시 그 데이터만 제공 ==data
     if data.find('지역선도') == True:
         print(data)
 
