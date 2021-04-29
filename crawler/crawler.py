@@ -3,6 +3,7 @@
 from bs4 import BeautifulSoup as bs
 import requests
 import random
+from urllib import parse
 
 def get_page_url(notice_type=""):
     # 학사:2, 심컴:3, 글솝:4
@@ -33,7 +34,7 @@ headers = {
 db = []
 
 while (True):
-    req = requests.get("http://computer.knu.ac.kr/06_sub/02_sub.html", headers=headers)
+    req = requests.get(get_page_url(2), headers=headers)
     notice_list = bs(req.text, "html.parser").find("table", class_="table").find("tbody").find_all("tr")
 
     for p in notice_list:
@@ -41,8 +42,8 @@ while (True):
 
         willappend = post()
         willappend.title = temp.get("title")
-        willappend.link = f"{get_page_url()}{temp.get('href')}"
-        willappend.id = temp.get("href")[4:8]
+        willappend.link = f"{get_page_url(2)}{temp.get('href')}"
+        willappend.id = parse.parse_qs(parse.urlparse(willappend.link).query)["no"][0]
 
         if not (isExisted(willappend)): # 원래는 db에 있는 id가지고 검증해야 함. 지금은 테스트를 위해 랜덤으로 둠
             contents = requests.get(willappend.link, headers=headers).text
@@ -55,4 +56,4 @@ while (True):
     break # 원래는 딜레이 주고 무한반복 돌면서 새 글이 올라오는지 확인해야 함
 
 for item in db:
-    print(item.id, item.title, item.link, item.contents)
+    print(item.id, item.title, item.link)#, item.contents)
