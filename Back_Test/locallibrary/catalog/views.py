@@ -1,8 +1,13 @@
 from django.shortcuts import render
 from catalog.models import Author,Book,BookInstance,Genre
 from django.views import generic
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
+# class MyView(LoginRequiredMixin,View):
+#     login_url='/login/'
+#     redirect_field_name='redirect_to'
 
 def index(request):
     num_books = Book.objects.all().count()
@@ -56,4 +61,16 @@ class AuthorDetailView(generic.DetailView):
 #     except Book.DoesNotExist:
 #         raise Http404('Book does not exist')
 
-#     return render(request, 'catalog/book_detail.html', context={'book': book})
+#     return render(request, 'catalog/book_detail.h tml', context={'book': book})
+
+
+
+#LoginRequiredMixin 이 view에 접근하려면 login이 필요하며 안되어있으면 ~~해라 
+
+class LoanedBooksByUserListView(LoginRequiredMixin,generic.ListView):
+    model=BookInstance
+    template_name='catalog/bookinstance_list_borrowed_user.html'
+    paginate_by=10
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')

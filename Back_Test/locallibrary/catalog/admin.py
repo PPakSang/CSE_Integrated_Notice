@@ -18,12 +18,15 @@ class registerAdmin(admin.ModelAdmin):
 
 @admin.register(BookInstance)
 class BookInstanceAdmin(admin.ModelAdmin):
-    list_filter=('status','due_back')
-    list_display=('id','status','due_back')
+    list_display = ('book', 'status', 'borrower', 'due_back', 'id')
+    list_filter = ('status', 'due_back')
 
+    fieldsets = (
+        (None, {
+            'fields': ('book','imprint', 'id')
+        }),
+        ('Availability', {
+            'fields': ('status', 'due_back','borrower')
+        }),
+    )
 
-user=User.objects.create_user('sh3','','1234')
-
-user.first_name='홍1'
-user.last_name='길동테스트'
-user.save()
