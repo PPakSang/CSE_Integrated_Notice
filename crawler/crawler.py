@@ -5,7 +5,7 @@ import requests
 import random
 from urllib import parse
 
-def get_page_url(notice_type=""):
+def get_page_url(notice_type="2"):
     # 학사:2, 심컴:3, 글솝:4
     notice_type = f"_{notice_type}" if notice_type else ""
     return f"http://computer.knu.ac.kr/06_sub/02_sub{notice_type}.html"

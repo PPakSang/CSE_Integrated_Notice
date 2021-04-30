@@ -19,5 +19,6 @@ if __name__ == '__main__': #파이썬 파일을 직접 실행시킬때만 작동
     data=data_set() #list
 
     Board.objects.bulk_create(data)
+    
 
     
