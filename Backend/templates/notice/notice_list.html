@@ -1,0 +1,26 @@
+{%if object_list%}
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Content</th>
+            <th>url</th>
+            <th>atthurl</th>
+            <th>tag</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for notice in object_list%}
+        <tr>
+            <td>{{notice.post_title}} </td>
+            <td>{{notice.post_content}} </td>
+            <td>{{notice.post_url}} </td>
+            <td>{{notice.attachment_url}} </td>
+            <td>{%for tag in notice.tag.all%} {{tag.name}} {%endfor%}
+            </td>
+
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
+{%else%} 게시글이 없습니다 {%endif%}
