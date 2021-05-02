@@ -15,9 +15,11 @@ class Uni_post(models.Model):
     post_content=models.TextField(help_text='공지사항 내용')
     post_url=models.URLField(max_length=200)
     attachment_url=models.URLField(max_length=200)
-    tag=models.ManyToManyField(Tag)
+    tag=models.ManyToManyField(Tag,related_name='test')
+    
 
 
     def __str__(self) -> str:
         return self.post_title
+        
     

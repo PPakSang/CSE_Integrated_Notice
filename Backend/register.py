@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from .notice.models import Uni_post
 from bs4 import BeautifulSoup as bs
 from urllib import parse
@@ -62,18 +63,13 @@ def get_data():
 
                 db.append(willappend)
 
-
         break # 원래는 딜레이 주고 무한반복 돌면서 새 글이 올라오는지 확인해야 함
+    
 
     for item in db:
         print(item.id, item.title, item.link)#, item.contents)
-
-    
-
-
-
-
-
+        
+        
 if __name__ =='__main__':
     data=get_data() #list
     Uni_post.objects.bulk_create(data)

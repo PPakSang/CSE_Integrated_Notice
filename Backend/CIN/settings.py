@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 
-secret_file = os.path.join(BASE_DIR, "Backend", "key.json")
+secret_file = os.path.join(BASE_DIR, "key.json")
 
 with open(secret_file) as f:
     secrets = json.loads(f.read())
@@ -73,7 +73,7 @@ ROOT_URLCONF = 'CIN.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates/'],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
