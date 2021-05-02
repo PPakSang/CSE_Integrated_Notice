@@ -2,6 +2,7 @@ from django.db import models
 from django.shortcuts import render
 from django.views import generic
 from .models import Tag,Uni_post
+from typing import Any, Dict
 
 # Create your views here.
 
