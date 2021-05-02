@@ -1,13 +1,14 @@
-import os
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CIN.settings')
-import django
-django.setup()
 from .notice.models import Uni_post
-
 from bs4 import BeautifulSoup as bs
-import requests
-import random
 from urllib import parse
+import requests
+import django
+import random
+import os
+
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CIN.settings')
+django.setup()
 
 
 def get_data():
