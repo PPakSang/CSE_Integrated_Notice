@@ -141,8 +141,8 @@ STATIC_URL = '/static/' #웹에서 접근할때 기본 주소
 STATICFILES_DIR=[ #릴리즈 할때는 STATIC_ROOT 설정 필수
     os.path.join(BASE_DIR,'static') #base_dir 에서 static 에 해당하는 경로로 가겠다
 ]
-MEDIA_URL='/media/'  #웹 접근 주소
-MEDIA_ROOT=os.path.join(BASE_DIR,'media') #성격은 STATICFILES_DIR 과 비슷
+MEDIA_URL = '/media/'  #웹 접근 주소
+MEDIA_ROOT = os.path.join(BASE_DIR,'media') #성격은 STATICFILES_DIR 과 비슷
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
