@@ -70,12 +70,6 @@ def get_data():
 
     
 
-
-
-
-
-if __name__ =='__main__':
-    data=get_data() #list
+if __name__ == '__main__':
+    data = get_data() # Uni_post를 값으로 가지는 리스트
     Uni_post.objects.bulk_create(data)
-    
-        
