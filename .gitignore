@@ -4,3 +4,4 @@ venv
 .vscode
 key.json
 .idea
+db.sqlite3

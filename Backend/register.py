@@ -1,4 +1,4 @@
-from .notice.models import Uni_post
+# pyright: reportMissingImports=false
 from bs4 import BeautifulSoup as bs
 from urllib import parse
 import requests
@@ -9,6 +9,7 @@ import os
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CIN.settings')
 django.setup()
+from notice.models import Uni_post
 
 headers = {
     "Host": "computer.knu.ac.kr",
@@ -44,11 +45,10 @@ def get_data():
             post.post_title = temp.get("title")
             post.post_url = f"{get_page_url(2)}{temp.get('href')}"
             post.attachment_url = ""
-            post.tag = ""
-            post.id = parse.parse_qs(parse.urlparse(post.link).query)["no"][0]
+            post.tag__name = ""
 
             if not (isExisted(post)): # 원래는 db에 있는 id가지고 검증해야 함. 지금은 테스트를 위해 랜덤으로 둠
-                contents = requests.get(post.link, headers=headers).text
+                contents = requests.get(post.post_url, headers=headers).text
                 contents = bs(contents, "html.parser").find("div", class_="kboard-document-wrap left")
                 post.contents = contents
 
@@ -58,7 +58,7 @@ def get_data():
         break # 원래는 딜레이 주고 무한반복 돌면서 새 글이 올라오는지 확인해야 함
 
     for item in db:
-        print(item.id, item.title, item.link)#, item.contents)
+        print(item.post_title, item.post_url)#, item.contents)
 
     
 
