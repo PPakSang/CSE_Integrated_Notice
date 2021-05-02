@@ -1,4 +1,4 @@
-from .models import Tag,Uni_post
+from .models import Tag, Uni_post
 from django.shortcuts import render
 from django.views import generic
 from django.db import models
@@ -8,7 +8,7 @@ from typing import Any, Dict
 # Create your views here.
 class Notice_listview(generic.ListView):
     model = Uni_post
-    template_name='notice/notice_list.html'
+    template_name = 'notice/notice_list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
