@@ -17,6 +17,9 @@ class Uni_post(models.Model):
     attachment_url = models.URLField(max_length=200)
     tag = models.ManyToManyField(Tag)
 
+    "https://computer.knu.ac.kr/06_sub/02_sub.html?no=3294"
+    "computer_3294"
+
 
     def __str__(self) -> str:
         return self.post_title
