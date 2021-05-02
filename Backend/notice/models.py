@@ -23,4 +23,3 @@ class Uni_post(models.Model):
 
     def __str__(self) -> str:
         return self.post_title
-    
