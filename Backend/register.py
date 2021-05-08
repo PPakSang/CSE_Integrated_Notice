@@ -9,7 +9,7 @@ import os
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CIN.settings')
 django.setup()
-from notice.models import Uni_post
+from notice.models import Uni_post,Tag
 
 headers = {
     "Host": "computer.knu.ac.kr",
@@ -44,24 +44,41 @@ def get_data():
             post = Uni_post()
             post.post_title = temp.get("title")
             post.post_url = f"{get_page_url(2)}{temp.get('href')}"
-            post.attachment_url = ""
-            post.tag__name = ""
+            post.attachment_url = "123"
+            
+            
+            
+            
 
-            if not (isExisted(post)): # 원래는 db에 있는 id가지고 검증해야 함. 지금은 테스트를 위해 랜덤으로 둠
-                contents = requests.get(post.post_url, headers=headers).text
-                contents = bs(contents, "html.parser").find("div", class_="kboard-document-wrap left")
-                post.contents = contents
+            # if not (isExisted(post)): # 원래는 db에 있는 id가지고 검증해야 함. 지금은 테스트를 위해 랜덤으로 둠
+            #     contents = requests.get(post.post_url, headers=headers).text
+            #     contents = bs(contents, "html.parser").find("div", class_="kboard-document-wrap left")
+            #     post.contents = contents
 
-                db.append(post)
+            #     db.append(post)
+            db.append(post)
 
 
         break # 원래는 딜레이 주고 무한반복 돌면서 새 글이 올라오는지 확인해야 함
-
+    a = 0
     for item in db:
-        print(item.post_title, item.post_url)#, item.contents)
+        # print(item.post_title, item.post_url)#, item.contents)
+        if str(item.post_title).find('교직') != -1:
+            
+            item.save()
+            tag,flag = Tag.objects.get_or_create(name = '교직') 
+            item.tag.add(tag)
+
+            
+            
+    
+        
+        
+    
 
     
 
 if __name__ == '__main__':
-    data = get_data() # Uni_post를 값으로 가지는 리스트
-    Uni_post.objects.bulk_create(data)
+     # Uni_post를 값으로 가지는 리스트
+    get_data()
+    
