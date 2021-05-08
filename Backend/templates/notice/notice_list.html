@@ -1,27 +1,83 @@
-{%if object_list%}
-<table>
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Content</th>
-            <th>url</th>
-            <th>atthurl</th>
-            <th>tag</th>
-        </tr>
-    </thead>
-    <tbody>
-        {%for notice in object_list%}
-        <tr>
-            <td>{{notice.post_title}} </td>
-            <td>{{notice.post_content}} </td>
-            <td>{{notice.post_url}} </td>
-            <td>{{notice.attachment_url}} </td>
-            <td>{%for tag in notice.tag.all%} {{tag.name}} {%endfor%}
-            </td>
-        </tr>
-        {%endfor%} {%for i in tag1%} {{i.post_title}} {{i.post_content}}
-        <p></p>{%endfor%}
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
 
-    </tbody>
-</table>
-{%else%} 게시글이 없습니다 {%endif%}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="{%static 'notice/main.css'%}">
+
+<body>
+    <label><input id="menu1" name="menu" type="radio" value="교직">교직</label>
+    <label><input id="menu2" name="menu" type="radio" value="휴학">휴학</label>
+    <table class="tag1">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Content</th>
+                <th>atthurl</th>
+                <th>tag</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {%for notice in tag1%}
+            <tr>
+                <td>{{notice.post_title}} </td>
+                <td>{{notice.post_content}} </td>
+                <td>{{notice.attachment_url}} </td>
+                <td>{%for tag in notice.tag.all%} {{tag.name}} {%endfor%}
+                </td>
+            </tr>
+            {%endfor%}
+            </tr>
+
+
+        </tbody>
+    </table>
+    <table class="tag2">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Content</th>
+                <th>atthurl</th>
+                <th>tag</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for notice in tag2%}
+            <tr>
+                <td>{{notice.post_title}} </td>
+                <td>{{notice.post_content}} </td>
+                <td>{{notice.attachment_url}} </td>
+                <td>{%for tag in notice.tag.all%} {{tag.name}} {%endfor%}
+                </td>
+            </tr>
+            {%endfor%}
+            </div>
+        </tbody>
+    </table>
+</body>
+
+
+<script>
+    var menu1 = document.getElementById('menu1');
+    var menu2 = document.getElementById('menu2');
+    var tag1 = document.getElementsByClassName('tag1');
+    var tag2 = document.getElementsByClassName('tag2');
+
+    menu1.addEventListener('change', function(e) {
+        tag1[0].classList.add('appear')
+        tag2[0].classList.remove('appear')
+    })
+    menu2.addEventListener('change', function(e) {
+        tag2[0].classList.add('appear')
+        tag1[0].classList.remove('appear')
+    })
+</script>
+
+</html>

@@ -63,11 +63,17 @@ def get_data():
     a = 0
     for item in db:
         # print(item.post_title, item.post_url)#, item.contents)
-        if str(item.post_title).find('교직') != -1:
+        if str(item.post_title).find('휴학') != -1:
             
             item.save()
-            tag,flag = Tag.objects.get_or_create(name = '교직') 
+            tag,flag = Tag.objects.get_or_create(name = '휴학') 
             item.tag.add(tag)
+
+    # post_all = Uni_post.objects.all()
+    # filtered_post = post_all.filter(post_title = '##')
+    # for post in filtered_post :
+        
+
 
             
             

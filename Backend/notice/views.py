@@ -10,9 +10,17 @@ class Notice_listview(generic.ListView):
     model = Uni_post
     template_name='notice/notice_list.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        for i in range(1, 4):
-            context['tag' + str(i)] = Uni_post.objects.filter(tag__name='멘토링'+str(i))
+    tag1 = Uni_post.objects.filter(tag__name = '교직')
+    tag2 = Uni_post.objects.filter(tag__name = '휴학')
 
-        return context
+
+    def get_context_data(self, **kwargs) :
+
+        kwargs['tag1'] = self.tag1
+        kwargs['tag2'] = self.tag2
+
+        return super().get_context_data(**kwargs)
+
+    
+
+    

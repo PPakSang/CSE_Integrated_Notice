@@ -1,0 +1,13 @@
+.tag1 {
+    width: 1000px;
+    display: none;
+}
+
+.tag2 {
+    width: 1000px;
+    display: none;
+}
+
+.appear {
+    display: block;
+}
