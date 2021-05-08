@@ -9,7 +9,7 @@ import os
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CIN.settings')
 django.setup()
-from notice.models import Uni_post
+from notice.models import Uni_post, Tag
 
 headers = {
     "Host": "computer.knu.ac.kr",
@@ -45,7 +45,7 @@ def get_data():
             post.post_title = temp.get("title")
             post.post_url = f"{get_page_url(2)}{temp.get('href')}"
             post.attachment_url = ""
-            post.tag__name = ""
+            post.tags__name = ""
 
             if not (isExisted(post)): # 원래는 db에 있는 id가지고 검증해야 함. 지금은 테스트를 위해 랜덤으로 둠
                 contents = requests.get(post.post_url, headers=headers).text
@@ -63,5 +63,13 @@ def get_data():
     
 
 if __name__ == '__main__':
-    data = get_data() # Uni_post를 값으로 가지는 리스트
-    Uni_post.objects.bulk_create(data)
+    # data = get_data() # Uni_post를 값으로 가지는 리스트
+    # Uni_post.objects.bulk_create(data)
+    rn= random.randrange(0, 100)
+    post = Uni_post(post_title=f"타이틀{rn}", post_content="컨텐츠", post_url="http://d.net", attachment_url="http://a.com")
+    post.save()
+    post.tags.add(Tag.objects.get(name="대학원"), Tag.objects.get(name="멘토링"))
+    print(post)
+    # M2M 필드는 db에 write 된 이후에 값을 설정할 수 있음 -> 미리 설정된 객체 리스트를 만들어 놓고 한 번에 추가할 수 없음.
+    # 따라서, get_data()에서는 tags 필드를 제외한 값만 준비해 두고, bulk_create()이후에 태그를 추가해야 할 듯
+    # print(Uni_post.objects.all()[0].post_url)
