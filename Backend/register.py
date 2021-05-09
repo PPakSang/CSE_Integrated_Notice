@@ -63,7 +63,8 @@ def get_data():
     a = 0
     for item in db:
         # print(item.post_title, item.post_url)#, item.contents)
-        if str(item.post_title).find('휴학') != -1:
+        
+        if str(item.post_title).find('휴학') != -1:  #그냥 title명이 휴학인거만 추출 (태그 추출 method 구현 필요)
             
             item.save()
             tag,flag = Tag.objects.get_or_create(name = '휴학') 
@@ -75,14 +76,12 @@ def get_data():
         
 
 
-            
-            
+
     
         
         
     
 
-    
 
 if __name__ == '__main__':
      # Uni_post를 값으로 가지는 리스트

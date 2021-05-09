@@ -1,0 +1,11 @@
+<form method="POST">
+    {%csrf_token%}
+    <input type="checkbox" name='object' value="교과">
+    <input type="checkbox" name='object' value="휴학">
+    <input type="checkbox" name='object' value="군대">
+
+    <input type="submit" value="제출">
+</form>
+<!-- 
+{% for i in a.object %} {{i}} {%endfor%} -->
+{{a}}

@@ -1,3 +1,4 @@
+from django.http.request import QueryDict
 from .models import Tag,Uni_post
 from django.shortcuts import render
 from django.views import generic
@@ -22,5 +23,19 @@ class Notice_listview(generic.ListView):
         return super().get_context_data(**kwargs)
 
     
+generic.DetailView
 
-    
+QueryDict
+
+def test_view(request):
+    if request.method == 'POST':
+        a = request.POST
+        b = {'key':1}
+        c = []
+        
+        a = a.getlist(key = 'object')
+        
+
+        return render(request,'test.html',{'a' : a})
+
+    return render(request,'test.html')
