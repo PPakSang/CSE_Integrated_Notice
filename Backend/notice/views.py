@@ -13,6 +13,6 @@ class Notice_listview(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         for i in range(1, 4):
-            context['tag' + str(i)] = Uni_post.objects.filter(tag__name='멘토링'+str(i))
+            context['tag' + str(i)] = Uni_post.objects.filter(tags__name='멘토링'+str(i))
 
         return context
