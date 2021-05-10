@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup as bs
 from urllib import parse
 import requests
 import django
-import random
 import os
 
 
@@ -23,7 +22,7 @@ headers = {
 }
 
 
-def get_data():
+def getData():
     def get_page_url(notice_type="2"):
         # 학사:2, 심컴:3, 글솝:4
         notice_type = f"_{notice_type}" if notice_type else ""
@@ -37,6 +36,11 @@ def get_data():
         else:
             print("이미 DB에 존재하는 공지사항입니다.", post.post_title)
             return True
+
+    def setPostTag(post, *tagnames):
+        tags = list(map(lambda t: Tag.objects.get(name=t), tagnames))
+        post.tags.add(*tags)
+
 
     while (True):
         req = requests.get(get_page_url(2), headers=headers)
@@ -57,8 +61,8 @@ def get_data():
                 post.post_contents = contents.prettify()
                 post.attachment_url = "\n".join(attach)
                 post.save()
-                post.tags.add(Tag.objects.get(name="대학원"), Tag.objects.get(name="멘토링"))
-                print(post.post_contents, post.attachment_url)
+                setPostTag(post, "멘토링", "대학원")
+                # print(post.post_contents, post.attachment_url)
 
 
         break # 원래는 딜레이 주고 무한반복 돌면서 새 글이 올라오는지 확인해야 함
@@ -68,7 +72,7 @@ def get_data():
 if __name__ == '__main__':
     for post in Uni_post.objects.all():
         post.delete()
-    get_data()
+    getData()
     # data = get_data() # Uni_post를 값으로 가지는 리스트
     # Uni_post.objects.bulk_create(data)
     # rn = random.randrange(0, 100)
