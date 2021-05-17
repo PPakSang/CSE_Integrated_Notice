@@ -56,9 +56,11 @@ def getData():
                 data = requests.get(post.post_url, headers=headers).text
                 contents = bs(data, "html.parser").find("div", class_="kboard-document-wrap left")
                 attach = bs(data, "html.parser").find_all("div", class_="kboard-attach")
-                attach = map(lambda tag: str(tag.find("a").text), attach)
+                attach_url = map(lambda tag: tag.find("a").get("href"), attach)
+                attach_name = map(lambda tag: tag.find("a").text, attach)
+                post.attachment_url = ", ".join(attach_url)
+                post.attachment_title = ", ".join(attach_name)
                 post.post_contents = contents.prettify()
-                post.attachment_url = "\n".join(attach)
                 post.save()
                 setPostTag(post, "멘토링", "대학원")
                 # print(post.post_contents, post.attachment_url)
