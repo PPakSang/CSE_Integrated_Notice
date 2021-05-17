@@ -11,3 +11,6 @@ Member
    
 Meeting time   
 목 19:30 / 일 15:30
+
+figma
+https://www.figma.com/file/hdzhVXHBAlYhgGqYYOs9W2/infomoa_prototype_00?node-id=0%3A1
