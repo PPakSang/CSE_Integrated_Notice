@@ -6,7 +6,6 @@ Object
    
 Member   
 강보석 iamjewel4445@gmail.com   
-강창민 kcm4112@naver.com   
 류형욱 hw0603@naver.com   
 박상현 ppm5377@naver.com   
    
