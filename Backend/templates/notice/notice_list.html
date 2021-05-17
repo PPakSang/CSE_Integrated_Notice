@@ -3,7 +3,7 @@
     <thead>
         <tr>
             <th>Title</th>
-            <th>Contents</th>
+            <!-- <th>Contents</th> -->
             <th>url</th>
             <th>atthurl</th>
             <th>tag</th>
@@ -13,7 +13,7 @@
         {% for notice in object_list %}
         <tr>
             <td>{{notice.post_title}} </td>
-            <td>{{notice.post_contents}} </td>
+            <!-- <td>{{notice.post_contents}} </td> -->
             <td>{{notice.post_url}} </td>
             <td>{{notice.attachment_url}} </td>
             <td>{% for tags in notice.tags.all %} {{tags.name}} {%endfor%}

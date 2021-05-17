@@ -1,6 +1,5 @@
 # pyright: reportMissingImports=false
 from bs4 import BeautifulSoup as bs
-from urllib import parse
 import requests
 import django
 import os
@@ -47,17 +46,17 @@ def getData():
         notice_list = bs(req.text, "html.parser").find("table", class_="table").find("tbody").find_all("tr")
 
         for p in notice_list:
-            temp = p.find("a")
-
             post = Uni_post()
-            post.post_url = f"{get_page_url(2)}{temp.get('href')}"
-            post.post_title = temp.get("title")
+            post.post_url = f"{get_page_url(2)}{p.find('a').get('href')}"
+            post.post_title = p.find('a').get("title")
+            post.post_author = p.find("td", class_="bbs_writer").text
+            post.post_date = p.find("td", class_="bbs_date").text
 
             if not (isExisted(post)):
                 data = requests.get(post.post_url, headers=headers).text
                 contents = bs(data, "html.parser").find("div", class_="kboard-document-wrap left")
                 attach = bs(data, "html.parser").find_all("div", class_="kboard-attach")
-                attach = map(lambda tag: str(tag.find("a")), attach)
+                attach = map(lambda tag: str(tag.find("a").text), attach)
                 post.post_contents = contents.prettify()
                 post.attachment_url = "\n".join(attach)
                 post.save()
