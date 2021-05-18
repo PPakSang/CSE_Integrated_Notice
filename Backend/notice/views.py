@@ -1,10 +1,14 @@
-from django.http.request import QueryDict
+from django.http.request import HttpRequest, QueryDict
+from django.http.response import HttpResponse
 from .models import Tag,Uni_post
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views import generic
 from django.db import models
 from typing import Any, Dict
-
+from django.views.decorators.csrf import csrf_exempt
+import json
+from collections import OrderedDict
+from django.core import serializers
 
 # Create your views here.
 class Notice_listview(generic.ListView):
@@ -26,16 +30,22 @@ class Notice_listview(generic.ListView):
 generic.DetailView
 
 QueryDict
-
+import sys
+@csrf_exempt
 def test_view(request):
-    if request.method == 'POST':
-        a = request.POST
-        b = {'key':1}
-        c = []
+    if request.method =='POST':
+        tags = request.POST['tags'].split(',')
         
-        a = a.getlist(key = 'object')
         
-
-        return render(request,'test.html',{'a' : a})
+        post = Uni_post.objects.all()
+        for i in tags :
+            post = post.filter(tag__name = i)
+     
+        
+        
+        post = serializers.serialize('json',post)
+        return HttpResponse(post)
 
     return render(request,'test.html')
+
+
