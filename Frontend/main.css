@@ -2,16 +2,20 @@
     box-sizing: border-box;
 }
 
+.btn-sm {
+    outline: none !important;
+}
+
+h1 {
+    margin: 0;
+}
+
 html,
 body {
     margin: 0;
     padding: 0;
-    font-size: 62.5%;
+    font-size: 62.5% !important;
     background-color: #E5E5E5 !important;
-}
-
-a:link {
-    text-decoration: none;
 }
 
 ol,
@@ -22,31 +26,29 @@ li {
     list-style: none;
 }
 
+.main_banner a {
+    color: white !important;
+}
+
 
 /* initialize */
-
-.container-fluid {
-    overflow: hidden;
-}
 
 header {
     background-color: #d91a1a;
 }
 
 .main_banner {
-    display: flex;
     margin: auto;
-    width: 99rem;
-    height: 5rem;
+    max-width: 99rem;
     color: white;
-    align-items: center;
 }
 
-.main_banner> :nth-child(2) {
+.banner_sub {
     text-align: end;
+    margin: 10px 0;
 }
 
-.main_banner li input {
+header input {
     width: 25rem;
     height: 3rem;
     border-radius: 0.5rem;
@@ -61,44 +63,111 @@ header {
 
 /* header */
 
+nav {
+    display: flex !important;
+    justify-content: center;
+}
+
 .nav_box {
     display: flex;
+    width: 99rem;
+    position: relative;
     justify-content: center;
     font-size: 1.2rem;
-    width: 99rem;
-    margin: auto;
 }
 
 .nav_box li {
     margin: 0 1rem;
 }
 
+.filter_box {
+    position: absolute;
+    right: 0;
+    display: block;
+    padding: 4px 15px;
+}
+
+.filter_box :hover {
+    cursor: pointer
+}
+
+button {
+    border: none;
+    outline: none;
+}
+
 
 /* nav */
-
-section {}
 
 .content li {
     padding: 1rem;
 }
 
 .nav_title {
-    width: 99rem;
-    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.tag_box {
+    margin: 0 !important;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.tag_box li {
+    float: left;
+}
+
+.nav_tag_box {
+    max-width: 99rem;
+    padding: 3rem 3rem 0 3rem;
+    font-size: 2rem;
     margin: auto;
     background-color: white;
 }
 
 .content_box {
-    width: 99rem;
+    max-width: 99rem;
     padding: 2rem;
+    font-size: 2rem;
     margin: auto;
     background-color: white;
 }
 
-.pagination {
-    
+.filter2_box {
+    max-width: 99rem;
+    margin: auto;
+    background-color: white;
+    text-align: end;
+    padding: 0 3rem;
+    display: none;
+}
+
+.tag_box input[type="checkbox"] {
+    display: none;
 }
 
 
 /* section */
+
+@media (max-width: 768px) {
+    html,
+    body {
+        font-size: 50% !important;
+    }
+    .banner_title {
+        text-align: center;
+    }
+    .banner_sub {
+        text-align: center;
+    }
+}
+
+@media (max-width :992px) {
+    .filter_box {
+        display: none;
+    }
+    .filter2_box {
+        display: block;
+    }
+}
