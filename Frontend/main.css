@@ -6,6 +6,10 @@
     outline: none !important;
 }
 
+label {
+    margin: 0 !important;
+}
+
 h1 {
     margin: 0;
 }
@@ -26,21 +30,23 @@ li {
     list-style: none;
 }
 
-.main_banner a {
-    color: white !important;
-}
-
 
 /* initialize */
 
 header {
     background-color: #d91a1a;
+    box-shadow: 0 0px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .main_banner {
     margin: auto;
     max-width: 99rem;
     color: white;
+}
+
+.main_banner a {
+    color: white !important;
+    font-weight: bold;
 }
 
 .banner_sub {
@@ -66,6 +72,8 @@ header input {
 nav {
     display: flex !important;
     justify-content: center;
+    margin: 1rem 0 !important;
+    border-bottom: 1px solid gainsboro;
 }
 
 .nav_box {
@@ -104,18 +112,36 @@ button {
 }
 
 .nav_title {
-    display: inline-block;
-    vertical-align: middle;
+    display: block;
 }
 
 .tag_box {
-    margin: 0 !important;
+    overflow: hidden;
+    background-color: white;
     display: inline-block;
+    padding: 1rem;
+    height: 3.8rem;
     vertical-align: middle;
 }
 
 .tag_box li {
     float: left;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+
+.tag_box label {
+    cursor: pointer;
+}
+
+.tag_box input[type="checkbox"] {
+    display: none;
+}
+
+.tag_boundary {
+    max-width: 99rem;
+    margin: 1rem auto;
+    font-size: 2rem;
 }
 
 .nav_tag_box {
@@ -143,7 +169,7 @@ button {
     display: none;
 }
 
-.tag_box input[type="checkbox"] {
+.tag_all {
     display: none;
 }
 
@@ -160,6 +186,12 @@ button {
     }
     .banner_sub {
         text-align: center;
+    }
+    .tag_box {
+        width: 2000px;
+    }
+    .tag_boundary {
+        overflow: scroll;
     }
 }
 

@@ -76,7 +76,7 @@ rbtn.on('click', function() {
 
 
 var tag_all = $('.tag_all')
-for (i = 0; i < 5; i++) {
+for (i = 0; i < 20; i++) {
     tag_all.before('<li><label for="tag' + i + '">클릭' + i + '</label><input id="tag' + i + '" value="클릭' + i + '" type="checkbox"></li>')
 }
 var tag_box = $('.tag_box li input[type ="checkbox"]')
@@ -99,3 +99,6 @@ tag_box.on('click', function(e) {
 tag_label.on('click', function() {
     this.classList.toggle('text-muted')
 })
+
+
+// 태그 추가하기(ajax 구현필요)

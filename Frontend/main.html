@@ -5,10 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+
     <title>KNU_INTEGRATED_NOTICE</title>
 </head>
 
@@ -17,7 +21,7 @@
         <header class="row">
             <div class="container main_banner">
                 <div class="col-sm-6 banner_title">
-                    <a class="" href="#">인포모아</a>
+                    <a class="" href="">인포모아</a>
                 </div>
                 <div class="col-sm-6 banner_sub">
                     <input class="input-sm" name='search' type="text" placeholder="검색할 내용을 입력해주세요">
@@ -27,7 +31,7 @@
                 </div>
             </div>
         </header>
-        <nav>
+        <nav class="row">
             <ul class="nav nav-tabs nav_box">
                 <li role="presentation" class="active"><a href="#">종합</a></li>
                 <li role="presentation"><a href="#">컴퓨터학부</a></li>
@@ -41,38 +45,41 @@
 
         </nav>
         <section>
+            <div class="tag_boundary">
+                <ul class="text-primary tag_box">
+                    <!-- 태그 들어가는 곳 -->
+                    <input class="tag_all" type="text">
+                </ul>
+            </div>
             <div class="nav_tag_box">
                 <div class="nav_title">종합 공지사항</div>
-                <ul class="tag_box">
-                    <!-- 태그 들어가는 곳 -->
-                    <li><input class="tag_all" type="text"></li>
-                </ul>
+
             </div>
 
-            <div class="filter2_box">
-                <label for="filter2">필터설정</label>
-                <button id="filter2" type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list"></span></button>
+            <div class="filter2_box ">
+                <label for="filter2 ">필터설정</label>
+                <button id="filter2 " type="button " class="btn btn-default btn-sm "><span class="glyphicon glyphicon-th-list "></span></button>
             </div>
 
 
-            <div class="content_box">
-                <ul class="content">
-                    <li><a href="#">[장학] 2021학년도 2학기 1차 국가근로장학금 학생 신청기간 안내</a><br><small class="text-muted">컴퓨터학부 이승희 2021 04:30</small> </li>
-                    <li><a href="#">21. 5. 20.(목) 글로벌SW역량강화 정기세미나「KERIS기관 및 사업소개」</a><br><small class="text-muted">컴퓨터학부 이승희 2021 04:30</small></li>
-                    <li><a href="#">2021 전공연계의 문제해결역량강화 멘토링(캡스톤디자인)</a><br><small class="text-muted">컴퓨터학부 이승희 2021 04:30</small></li>
-                    <li><a href="#"> 21. 5. 18.(화) 글로벌SW역량강화 정기세미나「한국지능정보사회진흥원(NIA)채용설명회」</a><br><small class="text-muted">컴퓨터학부 이승희 2021 04:30</small></li>
+            <div class="content_box ">
+                <ul class="content ">
+                    <li><a href="# ">[장학] 2021학년도 2학기 1차 국가근로장학금 학생 신청기간 안내</a><br><small class="text-muted ">컴퓨터학부 이승희 2021 04:30</small> </li>
+                    <li><a href="# ">21. 5. 20.(목) 글로벌SW역량강화 정기세미나「KERIS기관 및 사업소개」</a><br><small class="text-muted ">컴퓨터학부 이승희 2021 04:30</small></li>
+                    <li><a href="# ">2021 전공연계의 문제해결역량강화 멘토링(캡스톤디자인)</a><br><small class="text-muted ">컴퓨터학부 이승희 2021 04:30</small></li>
+                    <li><a href="# "> 21. 5. 18.(화) 글로벌SW역량강화 정기세미나「한국지능정보사회진흥원(NIA)채용설명회」</a><br><small class="text-muted ">컴퓨터학부 이승희 2021 04:30</small></li>
                 </ul>
-                <div class="text-center">
-                    <ul class="pagination">
-                        <li class="lbtn disabled">
-                            <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
+                <div class="text-center ">
+                    <ul class="pagination ">
+                        <li class="lbtn disabled ">
+                            <a href="# " aria-label="Previous ">
+                                <span aria-hidden="true ">&laquo;</span>
                             </a>
                         </li>
-                        <li class="page active"><a href="#">1</a></li>
-                        <li class="rbtn">
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
+                        <li class="page active "><a href="# ">1</a></li>
+                        <li class="rbtn ">
+                            <a href="# " aria-label="Next ">
+                                <span aria-hidden="true ">&raquo;</span>
                             </a>
                         </li>
                     </ul>
@@ -83,7 +90,7 @@
 
     </div>
 </body>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script src="main.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js "></script>
+<script src="main.js "></script>
 
 </html>
