@@ -1,3 +1,10 @@
+"""
+DEPRECATED SINCE 2021-05-21
+Use manage.py -runserver instead
+"""
+
+
+"""
 # pyright: reportMissingImports=false
 from bs4 import BeautifulSoup as bs
 import requests
@@ -46,25 +53,35 @@ def getData():
         notice_list = bs(req.text, "html.parser").find("table", class_="table").find("tbody").find_all("tr")
 
         for p in notice_list:
+            # 상단 고정된 공지사항일 경우 크롤링하지 않음
+            if (p.find(class_="bbs_num").text == "공지"):
+                continue
+            
+            # 게시물 인스턴스 생성 후 값 저장
             post = Uni_post()
             post.post_url = f"{get_page_url(2)}{p.find('a').get('href')}"
             post.post_title = p.find('a').get("title")
             post.post_author = p.find("td", class_="bbs_writer").text
             post.post_date = p.find("td", class_="bbs_date").text
 
+            # DB에 존재하지 않는 게시글일 경우 게시글 내용 크롤링하여 저장
             if not (isExisted(post)):
+                # 게시글 내용 확인하기 위해 GET 요청
                 data = requests.get(post.post_url, headers=headers).text
+                # 게시글 내용 파싱 후 저장
                 contents = bs(data, "html.parser").find("div", class_="kboard-document-wrap left")
+                post.post_contents = contents.prettify()
+                # 첨부파일 정보 파싱 후 저장
                 attach = bs(data, "html.parser").find_all("div", class_="kboard-attach")
                 attach_url = map(lambda tag: tag.find("a").get("href"), attach)
                 attach_name = map(lambda tag: tag.find("a").text, attach)
                 post.attachment_url = ", ".join(attach_url)
                 post.attachment_title = ", ".join(attach_name)
-                post.post_contents = contents.prettify()
+                # 인스턴스 DB에 기록
                 post.save()
+                # M2M 필드(게시물 태그) 설정
                 setPostTag(post, "멘토링", "대학원")
                 # print(post.post_contents, post.attachment_url)
-
 
         break # 원래는 딜레이 주고 무한반복 돌면서 새 글이 올라오는지 확인해야 함
 
@@ -84,3 +101,4 @@ if __name__ == '__main__':
     # M2M 필드는 db에 write 된 이후에 값을 설정할 수 있음 -> 미리 설정된 객체 리스트를 만들어 놓고 한 번에 추가할 수 없음.
     # 따라서, get_data()에서는 tags 필드를 제외한 값만 준비해 두고, bulk_create()이후에 태그를 추가해야 할 듯
     # print(Uni_post.objects.all()[0].post_url)
+"""
