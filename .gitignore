@@ -154,5 +154,3 @@ Thumbs.db
 # End of https://www.toptal.com/developers/gitignore/api/python
 
 Back_Test/
-.vscode/
-key.json
