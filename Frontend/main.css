@@ -80,7 +80,6 @@ nav {
     display: flex;
     width: 99rem;
     position: relative;
-    justify-content: center;
     font-size: 1.2rem;
 }
 
@@ -116,18 +115,34 @@ button {
 }
 
 .tag_box {
-    overflow: hidden;
+    font-size: 1.4rem;
     background-color: white;
     display: inline-block;
-    padding: 1rem;
-    height: 3.8rem;
+    margin: 0 !important;
+    overflow: hidden;
+    height: 4rem;
+    padding: 0.7rem;
+    padding-left: 3.8rem;
     vertical-align: middle;
+}
+
+.auto_height {
+    height: auto;
+    padding-bottom: 0;
 }
 
 .tag_box li {
     float: left;
     cursor: pointer;
-    margin-right: 1rem;
+    margin-right: 2rem;
+    margin-bottom: 0.7rem;
+    padding: 0.3rem 1rem;
+    border-radius: 5px;
+    background-color: whitesmoke;
+}
+
+.tag_nav {
+    background-color: white !important;
 }
 
 .tag_box label {
@@ -141,7 +156,7 @@ button {
 .tag_boundary {
     max-width: 99rem;
     margin: 1rem auto;
-    font-size: 2rem;
+    background-color: white;
 }
 
 .nav_tag_box {
@@ -192,6 +207,9 @@ button {
     }
     .tag_boundary {
         overflow: scroll;
+    }
+    .tag_nav {
+        display: none;
     }
 }
 

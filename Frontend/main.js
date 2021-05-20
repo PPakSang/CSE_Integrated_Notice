@@ -70,14 +70,14 @@ rbtn.on('click', function() {
 
 
 
-// page 번호 밑 버튼 이벤트
+// page 번호 및 버튼 이벤트
 
 
 
 
 var tag_all = $('.tag_all')
-for (i = 0; i < 20; i++) {
-    tag_all.before('<li><label for="tag' + i + '">클릭' + i + '</label><input id="tag' + i + '" value="클릭' + i + '" type="checkbox"></li>')
+for (i = 0; i < 5; i++) {
+    tag_all.before('<li><label for="tag' + i + '">#멘토링' + i + '</label><input id="tag' + i + '" value="클릭' + i + '" type="checkbox"></li>')
 }
 var tag_box = $('.tag_box li input[type ="checkbox"]')
 var tag_label = $('.tag_box label')
@@ -102,3 +102,14 @@ tag_label.on('click', function() {
 
 
 // 태그 추가하기(ajax 구현필요)
+
+
+
+var tag_var = $('.tag_box span')
+
+tag_var.on('click', function() {
+    console.log(1)
+    tag_var[0].classList.toggle('glyphicon-chevron-down')
+    tag_var[0].classList.toggle('glyphicon-chevron-up')
+    $('.tag_box')[0].classList.toggle('auto_height')
+})
