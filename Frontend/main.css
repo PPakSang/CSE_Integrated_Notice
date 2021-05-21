@@ -30,8 +30,18 @@ li {
     list-style: none;
 }
 
+a :visited,
+a:link {
+    text-decoration: none;
+}
+
 
 /* initialize */
+
+.banner_box {
+    max-width: 99rem;
+    margin: auto;
+}
 
 header {
     background-color: #d91a1a;
@@ -51,7 +61,9 @@ header {
 
 .banner_sub {
     text-align: end;
-    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 header input {
@@ -66,13 +78,19 @@ header input {
     font-size: 3.6rem;
 }
 
+#search {
+    font-size: 1.8rem;
+    cursor: pointer;
+    margin-left: 1rem;
+}
+
 
 /* header */
 
 nav {
-    display: flex !important;
+    max-width: 99rem;
     justify-content: center;
-    margin: 1rem 0 !important;
+    margin: 1rem auto !important;
     border-bottom: 1px solid gainsboro;
 }
 
@@ -186,6 +204,10 @@ button {
 
 .tag_all {
     display: none;
+}
+
+.disabled {
+    cursor: default;
 }
 
 

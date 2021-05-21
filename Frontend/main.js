@@ -1,12 +1,12 @@
-var first_page = $('.page')
+var first_page = $('.page_num')
 for (i = 10; i > 1; i--) {
-    first_page.after('<li class="page"><a href="#">' + i + '</a></li>')
+    first_page.after('<li class="page_num page-item"><a class="page-link" >' + i + '</a></li>')
 }
 
 // initialize
 
 
-var navs = $('.nav_box li');
+var navs = $('.nav_box li a');
 var nav_title = $('.nav_title');
 
 
@@ -23,7 +23,7 @@ navs.on('click', function(e) {
 
 
 
-var pages = $('.pagination .page')
+var pages = $('.pagination .page_num')
 pages.on('click', function(e) {
     pages.removeClass('active');
     this.classList.add('active');
@@ -50,19 +50,19 @@ lbtn.on('click', function() {
         return;
     } else {
         var test = $('.pagination .active');
-        var test2 = $('.page');
+        var test2 = $('.page_num');
         console.log(test2.index(test));
         test2[test2.index(test) - 1].click()
     }
 })
-
+var test = $('.pagination .active');
 rbtn.on('click', function() {
 
     if (rbtn.hasClass('disabled')) {
         return;
     } else {
         var test = $('.pagination .active');
-        var test2 = $('.page');
+        var test2 = $('.page_num');
         console.log(test2.index(test));
         test2[test2.index(test) + 1].click()
     }
@@ -76,7 +76,7 @@ rbtn.on('click', function() {
 
 
 var tag_all = $('.tag_all')
-for (i = 0; i < 5; i++) {
+for (i = 0; i < 20; i++) {
     tag_all.before('<li><label for="tag' + i + '">#멘토링' + i + '</label><input id="tag' + i + '" value="클릭' + i + '" type="checkbox"></li>')
 }
 var tag_box = $('.tag_box li input[type ="checkbox"]')
@@ -105,11 +105,11 @@ tag_label.on('click', function() {
 
 
 
-var tag_var = $('.tag_box span')
+var tag_var = $('.tag_box i')
 
 tag_var.on('click', function() {
     console.log(1)
-    tag_var[0].classList.toggle('glyphicon-chevron-down')
-    tag_var[0].classList.toggle('glyphicon-chevron-up')
+    tag_var[0].classList.toggle('bi-chevron-down')
+    tag_var[0].classList.toggle('bi-chevron-up')
     $('.tag_box')[0].classList.toggle('auto_height')
 })

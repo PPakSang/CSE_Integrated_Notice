@@ -5,50 +5,46 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
 
     <title>KNU_INTEGRATED_NOTICE</title>
 </head>
 
 <body>
-    <div class="container-fluid wrapper">
-        <header class="row">
-            <div class="container main_banner">
-                <div class="col-sm-6 banner_title">
-                    <a class="" href="">인포모아</a>
-                </div>
-                <div class="col-sm-6 banner_sub">
-                    <input class="input-sm" name='search' type="text" placeholder="검색할 내용을 입력해주세요">
-                    <button type="button" class="btn btn-default btn-sm" onclick=""><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                    <a href="#"></a>
+    <div class="container-fluid p-0 wrapper">
+        <header>
+            <div class="banner_box">
+                <div class="row main_banner">
+                    <div class="col-md-6 banner_title">
+                        <a class="" href="#">인포모아</a>
+                    </div>
+                    <div class="col-md-6 banner_sub">
+                        <div><input class="input-sm" name='search' type="text" placeholder="검색할 내용을 입력해주세요"></div>
+                        <div id="search"><i class="bi bi-search"></i></div>
 
+                    </div>
                 </div>
             </div>
         </header>
-        <nav class="row">
-            <ul class="nav nav-tabs nav_box">
-                <li role="presentation" class="active"><a href="#">종합</a></li>
-                <li role="presentation"><a href="#">컴퓨터학부</a></li>
-                <li role="presentation"><a href="#">인재개발원</a></li>
-                <li role="presentation"><a href="#">학사</a></li>
-                <div class="filter_box">
-                    <label for="filter">필터설정</label>
-                    <button id="filter" type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list"></span></button>
-                </div>
-            </ul>
+
+        <nav>
+            <div class="row">
+                <ul class="nav nav-tabs nav_box">
+                    <li class="nav-item "><a class="nav-link active" href="#">종합</a></li>
+                    <li class="nav-item "><a class="nav-link" href="#">컴퓨터학부</a></li>
+                    <li class="nav-item "><a class="nav-link" href="#">인재개발원</a></li>
+                    <li class="nav-item "><a class="nav-link" href="#">학사</a></li>
+                </ul>
+            </div>
 
         </nav>
         <section>
             <div class="tag_boundary">
                 <ul class="tag_box">
                     <!-- 태그 들어가는 곳 -->
-                    <li class="tag_nav"><span class="glyphicon glyphicon-chevron-down"></span></li>
+                    <li class="tag_nav"><i class="bi bi-chevron-down"></i></li>
                     <input class="tag_all" type="text">
                 </ul>
             </div>
@@ -77,28 +73,23 @@
                     <li><a href="# ">21. 5. 20.(목) 글로벌SW역량강화 정기세미나「KERIS기관 및 사업소개」</a><br><small class="text-muted ">컴퓨터학부 이승희 2021 04:30</small></li>
 
                 </ul>
-                <div class="text-center ">
-                    <ul class="pagination ">
-                        <li class="lbtn disabled ">
-                            <a href="# " aria-label="Previous ">
-                                <span aria-hidden="true ">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page active "><a href="# ">1</a></li>
-                        <li class="rbtn ">
-                            <a href="# " aria-label="Next ">
-                                <span aria-hidden="true ">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <ul class="pagination justify-content-center">
+                    <li class="lbtn page-item disabled">
+                        <a class="page-link" tabindex="-1" aria-disabled="true">&laquo;</a>
+                    </li>
+                    <li class="page_num page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="rbtn page-item">
+                        <a class="page-link">&raquo;</a>
+                    </li>
+                </ul>
             </div>
         </section>
         <footer></footer>
 
     </div>
 </body>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js "></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 <script src="main.js "></script>
 
 </html>
