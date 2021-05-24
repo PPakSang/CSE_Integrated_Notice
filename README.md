@@ -6,9 +6,11 @@ Object
    
 Member   
 강보석 iamjewel4445@gmail.com   
-강창민 kcm4112@naver.com   
 류형욱 hw0603@naver.com   
 박상현 ppm5377@naver.com   
    
 Meeting time   
 목 19:30 / 일 15:30
+
+figma
+https://www.figma.com/file/hdzhVXHBAlYhgGqYYOs9W2/infomoa_prototype_00?node-id=0%3A1
