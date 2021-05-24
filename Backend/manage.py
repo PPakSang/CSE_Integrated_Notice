@@ -39,7 +39,7 @@ def getData(origin):
             print("DB에 추가합니다.", post.post_title)
             return False
         else:
-            print("이미 DB에 존재하는 공지사항입니다.", post.post_title)
+            # print("이미 DB에 존재하는 공지사항입니다.", post.post_title)
             return True
 
     def setPostTag(post, *tagnames):
@@ -82,7 +82,7 @@ def getData(origin):
                 setPostTag(post, f"컴학_{typeEnum[origin]}", "멘토링")
                 # print(post.post_contents, post.attachment_url)
 
-        print("----------------------------------------------------")
+        print(f"---------------{threading.current_thread()}---------------")
         time.sleep(10)
         # break  # 원래는 딜레이 주고 무한반복 돌면서 새 글이 올라오는지 확인해야 함
 
