@@ -25,7 +25,6 @@ headers = {
 }
 
 def getData(origin):
-    return
     typeEnum = ("전체", "", "학사", "심컴", "글솝")
 
     def get_page_url(notice_type=2):
