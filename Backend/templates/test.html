@@ -1,0 +1,91 @@
+<head>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <meta name="_csrf" th:content="${_csrf.token}">
+</head>
+<form method="POST" action="">
+    {%csrf_token%}
+    <input id="tag1" class="check" type="checkbox" name='object' value="교직">
+    <input id="tag2" class="check" type="checkbox" name='object' value="휴학">
+    <input id="tag3" class="check" type="checkbox" name='object' value="군대">
+    <input id="tag_all" type="input" value="">
+
+    <input type="submit" value="제출">
+    <p class='test'></p>
+</form>
+<!-- 
+{% for i in a.object %} {{i}} {%endfor%} -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js "></script>
+<script>
+    // tag1 = document.getElementById('tag1');
+    // tag2 = document.getElementById('tag2');
+    // tag3 = document.getElementById('tag3');
+
+    // tag1.addEventListener('change', function test() {
+    //     // $.ajax({
+    //     //     url: "/test/ ",
+    //     //     // 요청을 보낼 url
+    //     //     data: this.value,
+    //     //     method: 'POST'
+    //     // })
+    //     console.log(1)   
+    // })
+
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    if (token && header) {
+        $(document).ajaxSend(function(event, xhr, options) {
+            xhr.setRequestHeader(header, token);
+        });
+    }
+    $('.check').click(function() {
+
+        var data = []
+
+
+
+        for (i = 1; i < 4; i++) {
+
+            if ($('#tag' + i).is(':checked')) {
+                data.push($('#tag' + i).prop('value'))
+            }
+        }
+
+        $('#tag_all').prop('value', data.toString())
+
+
+        $.ajax({
+                type: "POST", // 데이터를 전송하는 방법을 지정
+                url: "{% url 'test' %}", // 통신할 url을 지정
+                dataType: "JSON",
+                data: {
+                    'tags': $('#tag_all').prop('value'),
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}"
+                }, // 서버로 데이터 전송시 옵션
+                // 서버측에서 전송한 데이터를 어떤 형식의 데이터로서 해석할 것인가를 지정, 없으면 알아서 판단
+                // 서버측에서 전송한 Response 데이터 형식 (json)
+                // {'likes_count': post.like_count, 'message': message }
+                // string 으로 넘어감
+
+                success: function(data) {
+                    var post = ""
+                    for (var i = 0; i < data.length; i++) {
+                        post += "<p>" + data[i].fields.post_title + "</p>"
+                        console.log(post)
+                    }
+
+                    $('.test').html(post);
+
+                }
+
+
+            })
+            .fail(function(xhr, s, er) {
+                alert(er);
+            })
+
+    })
+</script>

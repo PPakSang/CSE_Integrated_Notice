@@ -1,0 +1,111 @@
+* {
+    box-sizing: border-box;
+}
+
+.btn-sm {
+    outline: none !important;
+}
+
+label {
+    margin: 0 !important;
+}
+
+h1 {
+    margin: 0;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 62.5% !important;
+    background-color: #E5E5E5 !important;
+}
+
+ol,
+ul,
+li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+
+/* initialize */
+
+.test {
+    width: 99rem;
+}
+
+header {
+    background-color: #d91a1a;
+    box-shadow: 0 0px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.main_banner {
+    margin: auto;
+    max-width: 99rem;
+    color: white;
+}
+
+.main_banner a {
+    color: white !important;
+    font-weight: bold;
+}
+
+.banner_sub {
+    text-align: end;
+    margin: 10px 0;
+}
+
+header input {
+    width: 25rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    outline-style: none;
+    border: none
+}
+
+.main_banner>:first-child {
+    font-size: 3.6rem;
+}
+
+
+/* header */
+
+nav {
+    display: flex !important;
+    justify-content: center;
+    margin: 1rem 0 !important;
+    border-bottom: 1px solid gainsboro;
+}
+
+.nav_box {
+    display: flex;
+    width: 99rem;
+    position: relative;
+    font-size: 1.2rem;
+}
+
+.nav_box li {
+    margin: 0 1rem;
+}
+
+.filter_box {
+    position: absolute;
+    right: 0;
+    display: block;
+    padding: 4px 15px;
+}
+
+.filter_box :hover {
+    cursor: pointer
+}
+
+button {
+    border: none;
+    outline: none;
+}
+
+
+/* nav */

@@ -86,6 +86,10 @@ def getData():
         break # 원래는 딜레이 주고 무한반복 돌면서 새 글이 올라오는지 확인해야 함
 
     
+        
+        
+    
+
 
 if __name__ == '__main__':
     for post in Uni_post.objects.all():
