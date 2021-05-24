@@ -14,8 +14,8 @@ from django.core import serializers
 class Notice_listview(generic.ListView):
     model = Uni_post
     template_name = 'notice/notice_list.html'
-    tag1 = Uni_post.objects.filter(tag__name = '교직')
-    tag2 = Uni_post.objects.filter(tag__name = '휴학')
+    tag1 = Uni_post.objects.filter(tags__name = '교직')
+    tag2 = Uni_post.objects.filter(tags__name = '휴학')
 
 
     def get_context_data(self, **kwargs) :
