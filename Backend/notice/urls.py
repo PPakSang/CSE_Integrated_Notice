@@ -5,5 +5,6 @@ from .views import *
 
 
 urlpatterns = [
-    path('', Notice_listview.as_view(), name='list'),
+    path('',mainview, name='main'),
+    path('getpageinfo/',getPageInfo,name='getpageinfo')
 ]

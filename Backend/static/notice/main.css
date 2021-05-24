@@ -1,13 +1,234 @@
-.tag1 {
-    width: 1000px;
-    display: none;
+* {
+    box-sizing: border-box;
 }
 
-.tag2 {
-    width: 1000px;
-    display: none;
+.btn-sm {
+    outline: none !important;
 }
 
-.appear {
+label {
+    margin: 0 !important;
+}
+
+h1 {
+    margin: 0;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 62.5% !important;
+    background-color: #E5E5E5 !important;
+}
+
+ol,
+ul,
+li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a :visited,
+a:link {
+    text-decoration: none;
+}
+
+
+/* initialize */
+
+.banner_box {
+    max-width: 99rem;
+    margin: auto;
+}
+
+header {
+    background-color: #d91a1a;
+    box-shadow: 0 0px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.main_banner {
+    margin: auto;
+    max-width: 99rem;
+    color: white;
+}
+
+.main_banner a {
+    color: white !important;
+    font-weight: bold;
+}
+
+.banner_sub {
+    text-align: end;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+header input {
+    width: 25rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    outline-style: none;
+    border: none
+}
+
+.main_banner>:first-child {
+    font-size: 3.6rem;
+}
+
+#search {
+    font-size: 1.8rem;
+    cursor: pointer;
+    margin-left: 1rem;
+}
+
+
+/* header */
+
+nav {
+    max-width: 99rem;
+    justify-content: center;
+    margin: 1rem auto !important;
+    border-bottom: 1px solid gainsboro;
+}
+
+.nav_box {
+    display: flex;
+    width: 99rem;
+    position: relative;
+    font-size: 1.2rem;
+}
+
+.nav_box li {
+    margin: 0 1rem;
+}
+
+button {
+    border: none;
+    outline: none;
+}
+
+
+/* nav */
+
+.content li {
+    padding: 1rem;
+}
+
+.nav_title {
     display: block;
+}
+
+.tag_box {
+    font-size: 1.4rem;
+    background-color: white;
+    display: inline-block;
+    margin: 0 !important;
+    overflow: hidden;
+    height: 4rem;
+    padding: 0.7rem;
+    padding-left: 3rem;
+    vertical-align: middle;
+}
+
+.auto_height {
+    height: auto;
+    padding-bottom: 0;
+}
+
+.tag_box li {
+    float: left;
+    cursor: pointer;
+    margin-right: 2rem;
+    margin-bottom: 0.7rem;
+    padding: 0.3rem 1rem;
+    border-radius: 5px;
+    background-color: whitesmoke;
+}
+
+.tag_nav {
+    background-color: white !important;
+}
+
+.tag_box label {
+    cursor: pointer;
+}
+
+.tag_box input[type="checkbox"] {
+    display: none;
+}
+
+.tag_boundary {
+    max-width: 99rem;
+    margin: 1rem auto;
+    background-color: white;
+}
+
+.nav_tag_box {
+    max-width: 99rem;
+    padding: 3rem 3rem 0 3rem;
+    font-size: 2rem;
+    margin: auto;
+    background-color: white;
+}
+
+.content_box {
+    max-width: 99rem;
+    padding: 2rem;
+    font-size: 2rem;
+    margin: auto;
+    background-color: white;
+}
+
+.filter2_box {
+    max-width: 99rem;
+    margin: auto;
+    background-color: white;
+    text-align: end;
+    padding: 0 3rem;
+    display: none;
+}
+
+.tag_all {
+    display: none;
+}
+
+.disabled {
+    cursor: default;
+}
+
+
+/* section */
+
+@media (max-width: 768px) {
+    html,
+    body {
+        font-size: 50% !important;
+    }
+    .banner_title {
+        text-align: center;
+    }
+    .banner_sub {
+        text-align: center;
+    }
+    .tag_box {
+        width: 2000px;
+    }
+    .tag_boundary {
+        overflow: scroll;
+    }
+    .tag_nav {
+        display: none;
+    }
+}
+
+@media (max-width :992px) {
+    .filter_box {
+        display: none;
+    }
+    .filter2_box {
+        display: block;
+    }
 }

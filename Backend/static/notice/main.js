@@ -23,7 +23,11 @@ navs.on('click', function(e) {
             "origin": e.target.text
         },
         success: function(data) {
+            console.log(data)
             $('.content').html(data)
+
+        },
+        error: function(e) {
 
         }
 

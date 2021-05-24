@@ -24,3 +24,14 @@ class Notice_listview(generic.ListView):
         kwargs['tag2'] = self.tag2
 
         return super().get_context_data(**kwargs)
+
+def mainview(request):
+    posts = Uni_post.objects.filter(post_origin = '컴퓨터학부_글솝')
+    return render(request,'notice/main.html')
+
+def getPageInfo(request):
+    print(request.GET['origin'])
+    post_origin = request.GET['origin']
+    posts = Uni_post.objects.filter(post_origin = post_origin)
+
+    return render(request,'notice/post_list.html',{'posts':posts})

@@ -158,3 +158,8 @@ Back_Test/
 key.json
 .idea/
 migrations/
+
+
+package-lock.json
+package.json
+node_modules/
