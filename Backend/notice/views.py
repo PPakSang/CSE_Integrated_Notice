@@ -24,31 +24,3 @@ class Notice_listview(generic.ListView):
         kwargs['tag2'] = self.tag2
 
         return super().get_context_data(**kwargs)
-
-    
-generic.DetailView
-
-QueryDict
-import sys
-@csrf_exempt
-def test_view(request):
-    if request.method =='POST':
-        tags = request.POST['tags'].split(',')
-        
-        
-        post = Uni_post.objects.all()
-        for i in tags :
-            post = post.filter(tag__name = i)
-     
-        
-        
-        post = serializers.serialize('json',post)
-        return HttpResponse(post)
-
-    return render(request,'test.html')
-
-def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
-    for i in range(1, 4):
-        context['tag' + str(i)] = Uni_post.objects.filter(tags__name='멘토링'+str(i))
-
