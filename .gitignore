@@ -157,3 +157,4 @@ Back_Test/
 .vscode/
 key.json
 .idea/
+migrations/
