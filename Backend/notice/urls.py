@@ -4,7 +4,7 @@ from .views import *
 
 
 
-urlpatterns=[
+urlpatterns = [
     path('', Notice_listview.as_view(), name='list'),
-    path('test/',test_view,name='test'),
+    path('test/', test_view, name='test'),
 ]
