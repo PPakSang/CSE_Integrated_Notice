@@ -137,10 +137,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 import os
-STATIC_URL = '/static/' 
+STATIC_URL = '/static/'
 #웹에서 접근할때 기본 주소
 #릴리즈 할때는 STATIC_ROOT 설정 필수
-STATICFILES_DIRS = [ 
+STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static'), 
 ]#base_dir 에서 static 에 해당하는 경로로 가겠다
 
