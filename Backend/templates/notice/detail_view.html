@@ -3,7 +3,9 @@
 {% block title %} detail {% endblock %}
 {% block content %}
 <section>
-    <div id="contents">{{ contents|safe }}</div>
+    <div class="content_box">
+        <div class="row" id="contents">{{ contents|safe }}</div>
+    </div>
 </section>
 {% endblock %}
 {% block script %}
