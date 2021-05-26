@@ -1,2 +1,10 @@
-{% extends 'notice/base.html' %} {% load static %}{% block title %}detail{% endblock %} {% block content %}
-<div id="contents">{{ contents|safe }}</div>{% endblock %} {% block script %}{% endblock %}
+{% extends 'notice/base.html' %}
+{% load static %}
+{% block title %} detail {% endblock %}
+{% block content %}
+<section>
+    <div id="contents">{{ contents|safe }}</div>
+</section>
+{% endblock %}
+{% block script %}
+{% endblock %}
