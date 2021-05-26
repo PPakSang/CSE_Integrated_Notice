@@ -79,7 +79,6 @@ def getData(origin):
                         img["src"] = f"http://computer.knu.ac.kr{img['src']}"
 
                 # 상대 경로로 등록된 첨부파일 주소들을 절대 경로로 변경
-                for a in contents.findAll("a", href=True):
                 for a in contents.find_all("a", href=True):
                     if (a["href"].startswith("/")):
                         a["href"] = f"http://computer.knu.ac.kr{a['href']}"
