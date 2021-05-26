@@ -1,5 +1,5 @@
 var first_page = $('.page_num')
-for (i = 10; i > 1; i--) {
+for (i = 5; i > 1; i--) {
     first_page.after('<li class="page_num page-item"><a class="page-link" >' + i + '</a></li>')
 }
 
@@ -22,9 +22,13 @@ navs.on('click', function(e) {
         data: {
             "origin": e.target.text
         },
+        dataType: "json",
+
+
         success: function(data) {
-            console.log(data)
-            $('.content').html(data)
+
+            $('.content').html(data.posts)
+
 
         },
         error: function(e) {
@@ -34,6 +38,7 @@ navs.on('click', function(e) {
     })
 
 })
+
 
 
 // 종합, 컴퓨터학부 ...

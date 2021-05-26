@@ -1,11 +1,12 @@
 from django.http.request import HttpRequest, QueryDict
-from django.http.response import HttpResponse
-from .models import Tag, Uni_post
+from django.http.response import HttpResponse, JsonResponse
+from django.template.loader import render_to_string
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect, render
+from .models import Tag, Uni_post
 from django.views import generic
 from django.db import models
 from typing import Any, Dict
-from django.views.decorators.csrf import csrf_exempt
 import json
 from collections import OrderedDict
 from django.core import serializers
@@ -32,6 +33,13 @@ def mainview(request):
 def getPageInfo(request):
     print(request.GET['origin'])
     post_origin = request.GET['origin']
-    posts = Uni_post.objects.filter(post_origin = post_origin)
-
-    return render(request,'notice/post_list.html',{'posts':posts})
+    posts = Uni_post.objects.filter(post_origin = post_origin).order_by()[:5]
+    posts_len = len(posts)
+    posts = render_to_string('notice/post_list.html',{"posts":posts})
+    print(posts)
+    context = {
+        "posts":posts,
+        "posts_len":posts_len
+    }
+    context = json.dumps(context)
+    return HttpResponse(context)

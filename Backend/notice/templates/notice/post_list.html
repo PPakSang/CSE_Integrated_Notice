@@ -1,4 +1,4 @@
 {%for post in posts%}
 <li>
-    <a href="#"></a>{{post.post_title}}<br><small class="text-muted ">{{post.post_author}} {{post.post_date}}</small> </li>
-{%endfor%}
+    <a href="{{post.post_url}}">{{post.post_title}}</a><br><small class="text-muted ">{{post.post_author}} {{post.post_date}}</small> </li>
+{%endfor%} {{posts_len}}
