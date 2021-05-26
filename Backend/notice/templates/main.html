@@ -5,10 +5,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="/static/main.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <!-- Jquery Reset -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap Reset -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <title>KNU_INTEGRATED_NOTICE</title>
 </head>
@@ -39,7 +44,7 @@
                 </ul>
             </div>
         </nav>
-        
+
         <section>
             <div class="tag_boundary">
                 <ul class="tag_box">
@@ -54,21 +59,46 @@
             </div>
             <div class="content_box">
                 <ul class="content">
-                    <li><a href="# ">테스트</a><br><small class="text-muted ">컴퓨터학부 이승희 2021 04:30</small></li>
-                    <!-- <li><a href="# ">21. 5. 20.(목) 글로벌SW역량강화 정기세미나「KERIS기관 및 사업소개」</a><br><small class="text-muted ">컴퓨터학부 이승희 2021 04:30</small></li>
-                    <li><a href="# ">2021 전공연계의 문제해결역량강화 멘토링(캡스톤디자인)</a><br><small class="text-muted ">컴퓨터학부 이승희 2021 04:30</small></li>
-                    <li><a href="# "> 21. 5. 18.(화) 글로벌SW역량강화 정기세미나「한국지능정보사회진흥원(NIA)채용설명회」</a><br><small class="text-muted ">컴퓨터학부 이승희 2021 04:30</small></li>
-                    <li><a href="# ">[장학] 2021학년도 2학기 1차 국가근로장학금 학생 신청기간 안내</a><br><small class="text-muted ">컴퓨터학부 이승희 2021 04:30</small> </li>
-                    <li><a href="# ">21. 5. 20.(목) 글로벌SW역량강화 정기세미나「KERIS기관 및 사업소개」</a><br><small class="text-muted ">컴퓨터학부 이승희 2021 04:30</small></li>
-                    <li><a href="# ">2021 전공연계의 문제해결역량강화 멘토링(캡스톤디자인)</a><br><small class="text-muted ">컴퓨터학부 이승희 2021 04:30</small></li>
-                    <li><a href="# "> 21. 5. 18.(화) 글로벌SW역량강화 정기세미나「한국지능정보사회진흥원(NIA)채용설명회」</a><br><small class="text-muted ">컴퓨터학부 이승희 2021 04:30</small></li>
-                    <li><a href="# ">[장학] 2021학년도 2학기 1차 국가근로장학금 학생 신청기간 안내</a><br><small class="text-muted ">컴퓨터학부 이승희 2021 04:30</small> </li>
-                    <li><a href="# ">21. 5. 20.(목) 글로벌SW역량강화 정기세미나「KERIS기관 및 사업소개」</a><br><small class="text-muted ">컴퓨터학부 이승희 2021 04:30</small></li> -->
+                    <!-- 처음 로드 시 전체 글 불러오기 -->
+                    <script>
+                        $.ajax({
+                            url: "getpageinfo/",
+                            data: {
+                                "origin": '컴퓨터학부_전체'
+                            },
+                            dataType: "json",
+                            success: function(data) {
+                                $('.content').html(data.posts)
+                            },
+                            error: function(e) {
+
+                            }
+                        })
+                    </script>
                 </ul>
                 <ul class="pagination justify-content-center">
                     <li class="lbtn page-item disabled">
                         <a class="page-link" tabindex="-1" aria-disabled="true">&laquo;</a>
                     </li>
+                    <script>
+                        $.ajax({
+                            url: "getpageinfo/",
+                            data: {
+                                "origin": '컴퓨터학부_전체'
+                            },
+                            dataType: "json",
+                            success: function(data) {
+                                var first_page = $('.page_num')
+                                console.log(data.posts_len)
+                                for (i = data.posts_len; i > 1; i--) {
+                                    first_page.after('<li class="page_num page-item"><a class="page-link" >' + i + '</a></li>')
+                                }
+                            },
+                            error: function(e) {
+
+                            }
+                        })
+                    </script>
                     <li class="page_num page-item active"><a class="page-link" href="#">1</a></li>
                     <li class="rbtn page-item">
                         <a class="page-link">&raquo;</a>
@@ -80,4 +110,5 @@
     </div>
     <script src="/static/main.js"></script>
 </body>
+
 </html>

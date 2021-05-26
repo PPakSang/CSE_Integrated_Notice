@@ -1,8 +1,3 @@
-var first_page = $('.page_num')
-for (i = 5; i > 1; i--) {
-    first_page.after('<li class="page_num page-item"><a class="page-link" >' + i + '</a></li>')
-}
-
 // initialize
 
 
