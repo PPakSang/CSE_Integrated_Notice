@@ -32,8 +32,13 @@ def mainview(request):
 def getPageInfo(request):
     print(request.GET['origin'])
     post_origin = request.GET['origin']
-    posts = Uni_post.objects.filter(post_origin=post_origin).order_by("-post_date")[:5]
-    posts_len = len(posts)
+    print(request.GET['num'])
+    page_num = int(request.GET['num'])
+    posts = Uni_post.objects.filter(post_origin=post_origin).order_by("-post_date")
+    print(posts.count())
+    
+    posts_len = int(posts.count())//11+1
+    posts = posts[10*(page_num-1):10*page_num]
     posts = render_to_string('notice/post_list.html',{"posts":posts})
     
     context = {

@@ -25,35 +25,8 @@
     <div class="content_box">
         <ul class="content">
             <!-- 처음 로드 시 전체 글 불러오기 -->
-            <script>
-                $.ajax({
-                    url: "getpageinfo/",
-                    data: {
-                        "origin": '컴퓨터학부_전체'
-                    },
-                    dataType: "json",
-
-
-                    success: function(data) {
-
-                        $('.content').html(data.posts)
-
-                    },
-                    error: function(e) {
-
-                    }
-
-                })
-            </script>
         </ul>
         <ul class="pagination justify-content-center">
-            <li class="lbtn page-item disabled">
-                <a class="page-link" tabindex="-1" aria-disabled="true">&laquo;</a>
-            </li>
-            <li class="page_num page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="rbtn page-item">
-                <a class="page-link">&raquo;</a>
-            </li>
         </ul>
     </div>
 </section>
