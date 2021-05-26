@@ -25,7 +25,7 @@ headers = {
 }
 
 def getData(origin):
-    return
+    # return
     typeEnum = ("전체", "", "학사", "심컴", "글솝")
 
     def get_page_url(notice_type=2):
@@ -68,26 +68,39 @@ def getData(origin):
             if not (isExisted(post)):
                 # 게시글 내용 확인하기 위해 GET 요청
                 data = requests.get(post.post_url, headers=headers).text
-                # 게시글 내용 파싱 후 저장
+                # 게시글 내용 파싱
                 contents = bs(data, "html.parser").find("div", class_="kboard-document-wrap left")
-                for a in contents.findAll("a", href=True):
-                    if (a["href"].startswith("/")):
-                        a["href"] = f"http://computer.knu.ac.kr{a['href']}"
+
+                # 상대 경로로 등록된 이미지 주소들을 절대 경로로 변경
                 for img in contents.findAll("img", src=True):
                     if (img["src"].startswith("/")):
                         img["src"] = f"http://computer.knu.ac.kr{img['src']}"
-                post.post_contents = contents.prettify()
+
+                # 상대 경로로 등록된 첨부파일 주소들을 절대 경로로 변경
+                for a in contents.findAll("a", href=True):
+                    if (a["href"].startswith("/")):
+                        a["href"] = f"http://computer.knu.ac.kr{a['href']}"
+
                 # 첨부파일 정보 파싱 후 저장
-                attach = bs(data, "html.parser").find_all("div", class_="kboard-attach")
+                attach = contents.find_all("div", class_="kboard-attach")
                 attach_url = map(lambda tag: tag.find("a").get("href"), attach)
                 attach_name = map(lambda tag: tag.find("a").text, attach)
                 post.attachment_url = ", ".join(attach_url)
                 post.attachment_title = ", ".join(attach_name)
+
+                # 게시글 내용에서 필요없는 부분 삭제
+                for cls in ("kboard-detail", "kboard-attach", "kboard-control"):
+                    part = contents.find("div", class_=cls)
+                    if (part is not None):
+                        part.decompose()
+
+                # 게시글 내용 저장
+                post.post_contents = contents.prettify()
+
                 # 인스턴스 DB에 기록
                 post.save()
                 # M2M 필드(게시물 태그) 설정
                 setPostTag(post, f"컴학_{typeEnum[origin]}", "멘토링")
-                # print(post.post_contents, post.attachment_url)
 
         print(f"---------------{threading.current_thread().name}, {typeEnum[origin]}---------------")
         time.sleep(10)
