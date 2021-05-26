@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup as bs
 import threading
 import requests
 import django
+import json
 import time
 import sys
 import os
@@ -25,7 +26,7 @@ headers = {
 }
 
 def getData(origin):
-    return
+    # return
     typeEnum = ("전체", "", "학사", "심컴", "글솝")
 
     def get_page_url(notice_type=2):
@@ -60,34 +61,49 @@ def getData(origin):
             post = Uni_post()
             post.post_url = f"{get_page_url(origin)}{p.find('a').get('href')}"
             post.post_title = p.find('a').get("title")
-            post.post_author = p.find("td", class_="bbs_writer").text
-            post.post_date = p.find("td", class_="bbs_date").text
-            post.post_origin = f"컴퓨터학부_{typeEnum[origin]}"
 
             # DB에 존재하지 않는 게시글일 경우 게시글 내용 크롤링하여 저장
             if not (isExisted(post)):
+                post.post_author = p.find("td", class_="bbs_writer").text
+                post.post_date = p.find("td", class_="bbs_date").text
+                post.post_origin = f"컴퓨터학부_{typeEnum[origin]}"
+
                 # 게시글 내용 확인하기 위해 GET 요청
                 data = requests.get(post.post_url, headers=headers).text
-                # 게시글 내용 파싱 후 저장
+                # 게시글 내용 파싱
                 contents = bs(data, "html.parser").find("div", class_="kboard-document-wrap left")
-                for a in contents.findAll("a", href=True):
-                    if (a["href"].startswith("/")):
-                        a["href"] = f"http://computer.knu.ac.kr{a['href']}"
-                for img in contents.findAll("img", src=True):
+
+                # 상대 경로로 등록된 이미지 주소들을 절대 경로로 변경
+                for img in contents.find_all("img", src=True):
                     if (img["src"].startswith("/")):
                         img["src"] = f"http://computer.knu.ac.kr{img['src']}"
-                post.post_contents = contents.prettify()
+
+                # 상대 경로로 등록된 첨부파일 주소들을 절대 경로로 변경
+                for a in contents.find_all("a", href=True):
+                    if (a["href"].startswith("/")):
+                        a["href"] = f"http://computer.knu.ac.kr{a['href']}"
+
                 # 첨부파일 정보 파싱 후 저장
-                attach = bs(data, "html.parser").find_all("div", class_="kboard-attach")
+                attach = contents.find_all("div", class_="kboard-attach")
                 attach_url = map(lambda tag: tag.find("a").get("href"), attach)
                 attach_name = map(lambda tag: tag.find("a").text, attach)
-                post.attachment_url = ", ".join(attach_url)
-                post.attachment_title = ", ".join(attach_name)
+                attach_info = {title: url for title, url in zip(attach_name, attach_url)}
+                post.attachment_info = json.dumps(attach_info, ensure_ascii=False)
+                
+                # 게시글 내용에서 필요없는 부분 삭제
+                for cls in ("kboard-detail", "kboard-attach", "kboard-control"):
+                    part = contents.find_all("div", class_=cls)
+                    for p in part:
+                        if (p is not None):
+                            p.decompose()
+
+                # 게시글 내용 저장
+                post.post_contents = contents.prettify()
+
                 # 인스턴스 DB에 기록
                 post.save()
                 # M2M 필드(게시물 태그) 설정
                 setPostTag(post, f"컴학_{typeEnum[origin]}", "멘토링")
-                # print(post.post_contents, post.attachment_url)
 
         print(f"---------------{threading.current_thread().name}, {typeEnum[origin]}---------------")
         time.sleep(10)
@@ -119,3 +135,4 @@ if __name__ == '__main__':
         # post.delete()
         pass
     main()
+
