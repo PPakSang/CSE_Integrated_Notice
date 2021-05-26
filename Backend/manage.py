@@ -69,6 +69,12 @@ def getData(origin):
                 data = requests.get(post.post_url, headers=headers).text
                 # 게시글 내용 파싱 후 저장
                 contents = bs(data, "html.parser").find("div", class_="kboard-document-wrap left")
+                for a in contents.findAll("a", href=True):
+                    if (a["href"].startswith("/")):
+                        a["href"] = f"http://computer.knu.ac.kr{a['href']}"
+                for img in contents.findAll("img", src=True):
+                    if (img["src"].startswith("/")):
+                        img["src"] = f"http://computer.knu.ac.kr{img['src']}"
                 post.post_contents = contents.prettify()
                 # 첨부파일 정보 파싱 후 저장
                 attach = bs(data, "html.parser").find_all("div", class_="kboard-attach")
@@ -82,7 +88,7 @@ def getData(origin):
                 setPostTag(post, f"컴학_{typeEnum[origin]}", "멘토링")
                 # print(post.post_contents, post.attachment_url)
 
-        print(f"---------------{threading.current_thread()}---------------")
+        print(f"---------------{threading.current_thread().name}, {typeEnum[origin]}---------------")
         time.sleep(10)
         # break  # 원래는 딜레이 주고 무한반복 돌면서 새 글이 올라오는지 확인해야 함
 

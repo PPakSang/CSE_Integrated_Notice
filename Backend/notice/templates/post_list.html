@@ -1,0 +1,7 @@
+{% for post in posts %}
+<li>
+    <a href="/detailview/{{ post.post_url }}" target="_blank">{{post.post_title}}</a>
+    <br>
+    <small class="text-muted">{{post.post_author}} {{post.post_date}}</small>
+</li>
+{% endfor %}
