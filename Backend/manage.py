@@ -74,12 +74,13 @@ def getData(origin):
                 contents = bs(data, "html.parser").find("div", class_="kboard-document-wrap left")
 
                 # 상대 경로로 등록된 이미지 주소들을 절대 경로로 변경
-                for img in contents.findAll("img", src=True):
+                for img in contents.find_all("img", src=True):
                     if (img["src"].startswith("/")):
                         img["src"] = f"http://computer.knu.ac.kr{img['src']}"
 
                 # 상대 경로로 등록된 첨부파일 주소들을 절대 경로로 변경
                 for a in contents.findAll("a", href=True):
+                for a in contents.find_all("a", href=True):
                     if (a["href"].startswith("/")):
                         a["href"] = f"http://computer.knu.ac.kr{a['href']}"
 
@@ -92,9 +93,10 @@ def getData(origin):
                 
                 # 게시글 내용에서 필요없는 부분 삭제
                 for cls in ("kboard-detail", "kboard-attach", "kboard-control"):
-                    part = contents.find("div", class_=cls)
-                    if (part is not None):
-                        part.decompose()
+                    part = contents.find_all("div", class_=cls)
+                    for p in part:
+                        if (p is not None):
+                            p.decompose()
 
                 # 게시글 내용 저장
                 post.post_contents = contents.prettify()
@@ -131,6 +133,7 @@ def main():
 
 if __name__ == '__main__':
     for post in Uni_post.objects.all():
-        post.delete()
+        # post.delete()
         pass
     main()
+
