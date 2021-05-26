@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup as bs
 import threading
 import requests
 import django
+import json
 import time
 import sys
 import os
@@ -60,12 +61,13 @@ def getData(origin):
             post = Uni_post()
             post.post_url = f"{get_page_url(origin)}{p.find('a').get('href')}"
             post.post_title = p.find('a').get("title")
-            post.post_author = p.find("td", class_="bbs_writer").text
-            post.post_date = p.find("td", class_="bbs_date").text
-            post.post_origin = f"컴퓨터학부_{typeEnum[origin]}"
 
             # DB에 존재하지 않는 게시글일 경우 게시글 내용 크롤링하여 저장
             if not (isExisted(post)):
+                post.post_author = p.find("td", class_="bbs_writer").text
+                post.post_date = p.find("td", class_="bbs_date").text
+                post.post_origin = f"컴퓨터학부_{typeEnum[origin]}"
+
                 # 게시글 내용 확인하기 위해 GET 요청
                 data = requests.get(post.post_url, headers=headers).text
                 # 게시글 내용 파싱
@@ -85,9 +87,9 @@ def getData(origin):
                 attach = contents.find_all("div", class_="kboard-attach")
                 attach_url = map(lambda tag: tag.find("a").get("href"), attach)
                 attach_name = map(lambda tag: tag.find("a").text, attach)
-                post.attachment_url = ", ".join(attach_url)
-                post.attachment_title = ", ".join(attach_name)
-
+                attach_info = {title: url for title, url in zip(attach_name, attach_url)}
+                post.attachment_info = json.dumps(attach_info, ensure_ascii=False)
+                
                 # 게시글 내용에서 필요없는 부분 삭제
                 for cls in ("kboard-detail", "kboard-attach", "kboard-control"):
                     part = contents.find("div", class_=cls)
@@ -129,6 +131,6 @@ def main():
 
 if __name__ == '__main__':
     for post in Uni_post.objects.all():
-        # post.delete()
+        post.delete()
         pass
     main()
