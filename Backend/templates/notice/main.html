@@ -1,0 +1,62 @@
+{% extends 'notice/base.html' %}{% block title%}경북대학교{% endblock %}{% block content %} {% load static %}
+<nav>
+    <div class="row">
+        <ul class="nav nav-tabs nav_box">
+            <li class="nav-item "><a class="nav-link active" href="#">컴퓨터학부_전체</a></li>
+            <li class="nav-item "><a class="nav-link" href="#">컴퓨터학부_심컴</a></li>
+            <li class="nav-item "><a class="nav-link" href="#">컴퓨터학부_글솝</a></li>
+            <li class="nav-item "><a class="nav-link" href="#">컴퓨터학부_학사</a></li>
+        </ul>
+    </div>
+</nav>
+
+<section>
+    <div class="tag_boundary">
+        <ul class="tag_box">
+            <!-- 태그 들어가는 곳 -->
+            <li class="tag_nav"><i class="bi bi-chevron-down"></i></li>
+            <input class="tag_all" type="text">
+        </ul>
+    </div>
+    <div class="nav_tag_box">
+        <div class="nav_title">종합 공지사항</div>
+
+    </div>
+    <div class="content_box">
+        <ul class="content">
+            <!-- 처음 로드 시 전체 글 불러오기 -->
+            <script>
+                $.ajax({
+                    url: "getpageinfo/",
+                    data: {
+                        "origin": '컴퓨터학부_전체'
+                    },
+                    dataType: "json",
+
+
+                    success: function(data) {
+
+                        $('.content').html(data.posts)
+
+                    },
+                    error: function(e) {
+
+                    }
+
+                })
+            </script>
+        </ul>
+        <ul class="pagination justify-content-center">
+            <li class="lbtn page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true">&laquo;</a>
+            </li>
+            <li class="page_num page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="rbtn page-item">
+                <a class="page-link">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+</section>
+<footer></footer>
+{% endblock %} {% block script %}
+<script src="{%static 'notice/main.js'%}"></script>{% endblock %}

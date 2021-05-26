@@ -24,7 +24,6 @@ navs.on('click', function(e) {
 
             $('.content').html(data.posts)
 
-
         },
         error: function(e) {
 
@@ -34,30 +33,47 @@ navs.on('click', function(e) {
 
 })
 
-
-
 // 종합, 컴퓨터학부 ...
+var first_page = $('.page_num')
+$.ajax({
+    url: "getpageinfo/",
+    data: {
+        "origin": '컴퓨터학부_전체'
+    },
+    dataType: "json",
+    success: function(data) {
+        console.log(data.posts_len)
+        for (i = data.posts_len; i > 1; i--) {
+            first_page.after('<li class="page_num page-item"><a class="page-link">' + i + '</a></li>')
+        }
+    },
+    error: function(e) {
 
-
-
-
-var pages = $('.pagination .page_num')
-pages.on('click', function(e) {
-    pages.removeClass('active');
-    this.classList.add('active');
-    console.log('클릭이벤트')
-
-    if (e.target.innerText == pages.length.toString()) {
-        $('.pagination .rbtn').addClass('disabled')
-    } else {
-        $('.pagination .rbtn').removeClass('disabled')
-    }
-    if (e.target.innerText == 1) {
-        $('.pagination .lbtn').addClass('disabled')
-    } else {
-        $('.pagination .lbtn').removeClass('disabled')
     }
 })
+
+setTimeout(() => {
+    var pages = $('.pagination .page_num')
+    pages.on('click', function(e) {
+        pages.removeClass('active');
+        this.classList.add('active');
+        console.log('클릭이벤트')
+
+        if (e.target.innerText == pages.length.toString()) {
+            $('.pagination .rbtn').addClass('disabled')
+        } else {
+            $('.pagination .rbtn').removeClass('disabled')
+        }
+        if (e.target.innerText == 1) {
+            $('.pagination .lbtn').addClass('disabled')
+        } else {
+            $('.pagination .lbtn').removeClass('disabled')
+        }
+    })
+}, 1000);
+
+
+
 
 
 var lbtn = $('.pagination .lbtn')

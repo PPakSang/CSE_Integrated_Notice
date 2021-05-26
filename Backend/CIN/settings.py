@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
 ]
 
 MIDDLEWARE = [
@@ -66,6 +67,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    
 ]
 
 ROOT_URLCONF = 'CIN.urls'
@@ -143,7 +146,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static'), 
 ]#base_dir 에서 static 에 해당하는 경로로 가겠다
-
+# STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 # MEDIA_URL = '/media/'  #웹 접근 주소
 # MEDIA_ROOT = os.path.join(BASE_DIR,'media') #성격은 STATICFILES_DIR 과 비슷
 

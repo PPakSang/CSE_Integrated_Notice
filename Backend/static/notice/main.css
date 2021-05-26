@@ -212,6 +212,7 @@ button {
     }
     .banner_sub {
         text-align: center;
+        justify-content: center;
     }
     .tag_box {
         width: 2000px;

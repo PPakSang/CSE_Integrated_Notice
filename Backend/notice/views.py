@@ -27,14 +27,14 @@ class Notice_listview(generic.ListView):
 
 def mainview(request):
     # posts = Uni_post.objects.filter(post_origin='컴퓨터학부_전체')
-    return render(request, 'main.html')
+    return render(request, 'notice/main.html')
 
 def getPageInfo(request):
     print(request.GET['origin'])
     post_origin = request.GET['origin']
-    posts = Uni_post.objects.filter(post_origin=post_origin).order_by("-post_date")[:6]
+    posts = Uni_post.objects.filter(post_origin=post_origin).order_by("-post_date")[:5]
     posts_len = len(posts)
-    posts = render_to_string('post_list.html',{"posts":posts})
+    posts = render_to_string('notice/post_list.html',{"posts":posts})
     
     context = {
         "posts":posts,
@@ -48,4 +48,4 @@ def detailview(request, url):
     qs = request.GET.urlencode()
     url = f"{url}?{qs}"
     contents = Uni_post.objects.filter(post_url=url)[0].post_contents
-    return render(request, "detail_view.html", {"contents": contents})
+    return render(request, "notice/detail_view.html", {"contents": contents})

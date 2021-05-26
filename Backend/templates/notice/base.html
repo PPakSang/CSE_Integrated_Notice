@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    {%load static%}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{%static 'notice/main.css'%}">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <!-- Jquery Reset -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap Reset -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <div class="container-fluid p-0 wrapper">
+        <header>
+            <div class="banner_box">
+                <div class="row main_banner">
+                    <div class="col-md-6 banner_title">
+                        <a class="" href="/">인포모아</a>
+                    </div>
+                    <div class="col-md-6 banner_sub">
+                        <div><input class="input-sm" name='search' type="text" placeholder="검색할 내용을 입력해주세요"></div>
+                        <div id="search"><i class="bi bi-search"></i></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        {% block content %}{% endblock %}
+    </div>
+</body>
+{% block script %}{% endblock %}
+
+</html>
