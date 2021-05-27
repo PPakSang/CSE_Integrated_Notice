@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="{% static 'notice/post_list.css' %}">
 <section>
     <div class="content_box">
-        <h2 id="title">{{ post.post_title }}</h2>
+        <h2 id="title">{{ post.post_title|safe }}</h2>
         <br>
         <div id="attach">
         </div>
@@ -13,12 +13,8 @@
 {% endblock %}
 {% block script %}
 <script type="text/javascript">
-    var attach_info = '"{{ post.attachment_info }}"';
-    // attach_info = attach_info.replace(/&quot;/g, '\\"');
-    var jsonObj = JSON.parse(attach_info);
-    console.log(jsonObj)
-    
-    var data = { "코로나19 경제사정 곤란 대학생 국가장학금 2유형 지원(안).hwp": "http://computer.knu.ac.kr/pack/bbs/down.php?f_name=Q0dUVlpEXldTVXhOchEQbktTVQ==&amp;o_name=코로나19 경제사정 곤란 대학생 국가장학금 2유형 지원(안).hwp&amp;tbl=Site_BBS_25" };
+    var attach_info = '{{ post.attachment_info }}'.replace(/&quot;/g, '"');
+    var data = JSON.parse(attach_info)
 
     window.onload = function () {
         var makeTable = $("<table>");
