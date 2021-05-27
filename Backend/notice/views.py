@@ -60,5 +60,5 @@ def getPageInfo(request):
 def detailview(request, url):
     qs = request.GET.urlencode()
     url = f"{url}?{qs}"
-    contents = Uni_post.objects.filter(post_url=url)[0].post_contents
-    return render(request, "notice/detail_view.html", {"contents": contents})
+    post = Uni_post.objects.filter(post_url=url)[0]
+    return render(request, "notice/detail_view.html", {"post": post})

@@ -2,7 +2,32 @@
 <link rel="stylesheet" href="{% static 'notice/post_list.css' %}">
 <section>
     <div class="content_box">
-        <div class="row" id="contents">{{ contents|safe }}</div>
+        <h2 id="title">{{ post.post_title }}</h2>
+        <br>
+        <div id="attach">
+        </div>
+        <br>
+        <div class="row" id="contents">{{ post.post_contents|safe }}</div>
     </div>
 </section>
-{% endblock %} {% block script %} {% endblock %}
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+    var attach_info = '"{{ post.attachment_info }}"';
+    // attach_info = attach_info.replace(/&quot;/g, '\\"');
+    var jsonObj = JSON.parse(attach_info);
+    console.log(jsonObj)
+    
+    var data = { "코로나19 경제사정 곤란 대학생 국가장학금 2유형 지원(안).hwp": "http://computer.knu.ac.kr/pack/bbs/down.php?f_name=Q0dUVlpEXldTVXhOchEQbktTVQ==&amp;o_name=코로나19 경제사정 곤란 대학생 국가장학금 2유형 지원(안).hwp&amp;tbl=Site_BBS_25" };
+
+    window.onload = function () {
+        var makeTable = $("<table>");
+        $("#attach").append($(makeTable));
+
+        $.each(data, function (i, dt) {
+            const key = Object.keys(data).find(key => data[key] === dt);
+            $(makeTable).append(`<tr><td><a href="${dt}">${key}</a></td></tr>`);
+        });
+    }
+</script>
+{% endblock %}
