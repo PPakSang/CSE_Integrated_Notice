@@ -131,8 +131,8 @@ def main():
     execute_from_command_line(sys.argv)
 
 if __name__ == '__main__':
-    # for post in Uni_post.objects.all():
-    #     # post.delete()
-    #     pass
+    for post in Uni_post.objects.all():
+        # post.delete()
+        pass
     main()
 
