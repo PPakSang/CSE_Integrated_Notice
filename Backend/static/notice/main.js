@@ -41,7 +41,7 @@ var first_page = $('.page_num')
 function add_pagination(data) {
     var page_html = "<li class='lbtn page-item disabled'><a class='page-link' tabindex='-1' aria-disabled='true'>&laquo;</a></li>"
     var pagination = $('.pagination')
-    console.log(data.posts_len)
+        // console.log(data.posts_len)
     for (i = 1; i <= data.posts_len; i++) {
         page_html = page_html + '<li class="page_num page-item"><a class="page-link">' + i + '</a></li>'
     }
@@ -64,11 +64,12 @@ $.ajax({
 
         pages.on('click', function(e) {
 
+
             $.ajax({
                 url: "getpageinfo/",
                 data: {
                     "origin": $('.nav-link.active').text(),
-                    "num": pages.index(e.target) + 1
+                    "num": e.target.text
                 },
                 dataType: "json",
                 success: function(data) {

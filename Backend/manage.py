@@ -26,6 +26,7 @@ headers = {
 }
 
 def getData(origin):
+    return
     # return
     typeEnum = ("전체", "", "학사", "심컴", "글솝")
 
@@ -131,8 +132,8 @@ def main():
     execute_from_command_line(sys.argv)
 
 if __name__ == '__main__':
-    for post in Uni_post.objects.all():
-        # post.delete()
-        pass
+    # for post in Uni_post.objects.all():
+    #     # post.delete()
+    #     pass
     main()
 
