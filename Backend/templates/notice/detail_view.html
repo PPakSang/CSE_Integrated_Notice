@@ -1,12 +1,8 @@
-{% extends 'notice/base.html' %}
-{% load static %}
-{% block title %} detail {% endblock %}
-{% block content %}
+{% extends 'notice/base.html' %} {% load static %} {% block title %} detail {% endblock %} {% block content %}
+<link rel="stylesheet" href="{% static 'notice/post_list.css' %}">
 <section>
     <div class="content_box">
         <div class="row" id="contents">{{ contents|safe }}</div>
     </div>
 </section>
-{% endblock %}
-{% block script %}
-{% endblock %}
+{% endblock %} {% block script %} {% endblock %}

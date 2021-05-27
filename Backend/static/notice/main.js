@@ -6,8 +6,10 @@ var nav_title = $('.nav_title');
 
 
 
-
+// origin 클릭했을때
 navs.on('click', function(e) {
+    $('.tag_box label').removeClass('text-muted');
+    $('input:checked').prop('checked', false);
 
     navs.removeClass('active');
     this.classList.add('active');
@@ -16,7 +18,8 @@ navs.on('click', function(e) {
         url: "getpageinfo/",
         data: {
             "origin": e.target.text,
-            "num": 1
+            "num": 1,
+            "tags": ""
         },
         dataType: "json",
 
@@ -24,6 +27,7 @@ navs.on('click', function(e) {
         success: function(data) {
 
             $('.content').html(data.posts)
+            add_pagination(data)
 
         },
         error: function(e) {
@@ -48,74 +52,81 @@ function add_pagination(data) {
     page_html = page_html + "<li class='rbtn page-item'><a class='page-link'>&raquo;</a></li>"
     pagination.html(page_html)
     $('.page_num')[0].classList.add('active')
+    pages = $('.pagination .page_num')
+
+    pages.on('click', function(e) {
+        pages.removeClass('active');
+        this.classList.add('active');
+
+
+        $.ajax({
+            url: "getpageinfo/",
+            data: {
+                "origin": $('.nav-link.active').text(),
+                "num": $('.page-item.active').text(),
+                "tags": ""
+            },
+            dataType: "json",
+            success: function(data) {
+                $('.content').html(data.posts)
+            }
+        })
+
+
+
+        if (e.target.innerText == pages.length.toString()) {
+            $('.pagination .rbtn').addClass('disabled')
+        } else {
+            $('.pagination .rbtn').removeClass('disabled')
+        }
+        if (e.target.innerText == 1) {
+            $('.pagination .lbtn').addClass('disabled')
+        } else {
+            $('.pagination .lbtn').removeClass('disabled')
+        }
+    })
+    var lbtn = $('.lbtn')
+    var rbtn = $('.rbtn')
+    lbtn.on('click', function() {
+        if (lbtn.hasClass('disabled')) {
+            return;
+        } else {
+            var active_page = $('.pagination .active');
+            var page_all = $('.page_num');
+            // console.log(page_all.index(active_page));
+            page_all[page_all.index(active_page) - 1].click()
+        }
+    })
+
+    var test = $('.pagination .active');
+    rbtn.on('click', function() {
+
+        if (rbtn.hasClass('disabled')) {
+            return;
+        } else {
+            var active_page = $('.pagination .active');
+            var page_all = $('.page_num');
+            // console.log(page_all.index(active_page));
+            page_all[page_all.index(active_page) + 1].click()
+        }
+    })
 }
+
+
+
 var pages
 $.ajax({
     url: "getpageinfo/",
     data: {
         "origin": '컴퓨터학부_전체',
-        "num": 1
+        "num": 1,
+        "tags": ""
     },
     dataType: "json",
     success: function(data) {
         $('.content').html(data.posts)
         add_pagination(data)
-        pages = $('.pagination .page_num')
 
-        pages.on('click', function(e) {
-
-
-            $.ajax({
-                url: "getpageinfo/",
-                data: {
-                    "origin": $('.nav-link.active').text(),
-                    "num": e.target.text
-                },
-                dataType: "json",
-                success: function(data) {
-                    $('.content').html(data.posts)
-                }
-            })
-            pages.removeClass('active');
-            this.classList.add('active');
-
-            console.log(e.target.text)
-            if (e.target.innerText == pages.length.toString()) {
-                $('.pagination .rbtn').addClass('disabled')
-            } else {
-                $('.pagination .rbtn').removeClass('disabled')
-            }
-            if (e.target.innerText == 1) {
-                $('.pagination .lbtn').addClass('disabled')
-            } else {
-                $('.pagination .lbtn').removeClass('disabled')
-            }
-        })
-        var lbtn = $('.lbtn')
-        var rbtn = $('.rbtn')
-        lbtn.on('click', function() {
-            if (lbtn.hasClass('disabled')) {
-                return;
-            } else {
-                var active_page = $('.pagination .active');
-                var page_all = $('.page_num');
-                // console.log(page_all.index(active_page));
-                page_all[page_all.index(active_page) - 1].click()
-            }
-        })
-
-        var test = $('.pagination .active');
-        rbtn.on('click', function() {
-
-            if (rbtn.hasClass('disabled')) {
-                return;
-            } else {
-                var active_page = $('.pagination .active');
-                var page_all = $('.page_num');
-                // console.log(page_all.index(active_page));
-                page_all[page_all.index(active_page) + 1].click()
-            }
-        })
     },
     error: function(e) {
 
@@ -138,10 +149,12 @@ $.ajax({
 
 var tag_all = $('.tag_all')
 for (i = 0; i < 20; i++) {
-    tag_all.before('<li><label for="tag' + i + '">#멘토링' + i + '</label><input id="tag' + i + '" value="클릭' + i + '" type="checkbox"></li>')
+    tag_all.before('<li><label for="tag' + i + '">#멘토링' + i + '</label><input id="tag' + i + '" value="컴학_전체" type="checkbox"></li>')
 }
 var tag_box = $('.tag_box li input[type ="checkbox"]')
 var tag_label = $('.tag_box label')
+
+// 태그 클릭했을 시
 tag_box.on('click', function(e) {
 
     var data = []
@@ -154,6 +167,24 @@ tag_box.on('click', function(e) {
     }
 
     tag_all.prop('value', data.toString())
+    console.log(tag_all.prop('value'))
+
+    $.ajax({
+        url: "getpageinfo/",
+        data: {
+            "origin": $('.nav-link.active').text(),
+            "num": $('.page-item.active').text(),
+            "tags": tag_all.prop('value')
+        },
+        dataType: "json",
+        success: function(data) {
+            $('.content').html(data.posts)
+            add_pagination(data)
+        }
+
+    })
+
+
 
 })
 

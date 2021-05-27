@@ -3,3 +3,7 @@
     max-width: 99rem;
     padding: 8rem;
 }
+
+img {
+    width: 50rem !important;
+}
