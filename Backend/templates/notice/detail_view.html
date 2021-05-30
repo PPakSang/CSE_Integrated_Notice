@@ -11,4 +11,19 @@
         <div class="row" id="contents">{{ contents|safe }}</div>
     </div>
 </section>
-{% endblock %} {% block script %} {% endblock %}
+{% endblock %} {% block script %}
+<script type="text/javascript">
+    var attach_info = '{{ post.attachment_info }}'.replace(/&quot;/g, '"');
+    var data = JSON.parse(attach_info)
+
+    window.onload = function() {
+        var makeTable = $("<table>");
+        $("#attach").append($(makeTable));
+
+        $.each(data, function(i, dt) {
+            const key = Object.keys(data).find(key => data[key] === dt);
+            $(makeTable).append(`<tr><td><a href="${dt}">${key}</a></td></tr>`);
+        });
+    }
+</script>
+{% endblock %}

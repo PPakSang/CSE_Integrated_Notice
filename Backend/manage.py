@@ -26,7 +26,6 @@ headers = {
 }
 
 def getData(origin):
-
     # return
     typeEnum = ("전체", "", "학사", "심컴", "글솝")
 
@@ -92,7 +91,7 @@ def getData(origin):
                 post.attachment_info = json.dumps(attach_info, ensure_ascii=False)
                 
                 # 게시글 내용에서 필요없는 부분 삭제
-                for cls in ("kboard-detail", "kboard-attach", "kboard-control"):
+                for cls in ("kboard-title", "kboard-detail", "kboard-attach", "kboard-control"):
                     part = contents.find_all("div", class_=cls)
                     for p in part:
                         if (p is not None):
@@ -132,8 +131,8 @@ def main():
     execute_from_command_line(sys.argv)
 
 if __name__ == '__main__':
-    # for post in Uni_post.objects.all():
-    #     # post.delete()
-    #     pass
+    for post in Uni_post.objects.all():
+        # post.delete()
+        pass
     main()
 
