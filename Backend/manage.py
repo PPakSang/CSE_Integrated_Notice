@@ -45,8 +45,26 @@ def getData(origin):
             return True
 
     def setPostTag(post, *tagnames):
-        tags = list(map(lambda t: Tag.objects.get(name=t), tagnames))
+        tags = list(map(lambda t: Tag.objects.get_or_create(name=t, origin=post.post_origin)[0], tagnames))
         post.tags.add(*tags)
+
+    def getPostTag(title: str, contents: str) -> list:
+        tag_data = {
+            "세미나": ("세미나", ),
+            "대회": ("대회", ),
+            "장학금": ("장학금", "장학생", "장학재단"),
+            "마일리지": ("마일리지", ),
+            "근로/튜터": ("근로", "튜터", "TUTOR", "tutor", "Tutor")
+        }
+        tag_result = []
+
+        for tag in tag_data.keys():
+            for keyword in tag_data[tag]:
+                if (keyword in title or keyword in contents):
+                    tag_result.append(tag)
+                    break
+
+        return tag_result if tag_result else ["기타"]
 
     while (True):
         req = requests.get(get_page_url(origin), headers=headers)
@@ -103,10 +121,10 @@ def getData(origin):
                 # 인스턴스 DB에 기록
                 post.save()
                 # M2M 필드(게시물 태그) 설정
-                setPostTag(post, f"컴학_{typeEnum[origin]}", "멘토링")
+                setPostTag(post, f"컴학_{typeEnum[origin]}", *getPostTag(post.post_title, contents.get_text()))
 
         print(f"---------------{threading.current_thread().name}, {typeEnum[origin]}---------------")
-        time.sleep(10)
+        time.sleep(60)
         # break  # 원래는 딜레이 주고 무한반복 돌면서 새 글이 올라오는지 확인해야 함
 
 
@@ -131,8 +149,7 @@ def main():
     execute_from_command_line(sys.argv)
 
 if __name__ == '__main__':
-    for post in Uni_post.objects.all():
-        # post.delete()
-        pass
+    # for post in Uni_post.objects.all():
+    #     post.delete()
     main()
 
