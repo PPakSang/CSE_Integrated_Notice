@@ -50,7 +50,7 @@ def getPageInfo(request):
     posts = render_to_string('notice/post_list.html',{"posts":posts})
     tags = Tag.objects.filter(origin=post_origin)
     tags = serializers.serialize("json", tags)
-    
+    print(tags)
     context = {
         "posts":posts,
         "posts_len":posts_len,
