@@ -159,7 +159,11 @@ function get_tags(data) {
     console.log(tags)
     for (i = tags.length - 1; i >= 0; i--) {
         tags[i].fields.name
-        tag_nav.after(`<li><label for="tag${i}" class="text-muted">#${tags[i].fields.name}</label><input id="tag${i}" value="${tags[i].fields.name}" type="checkbox"></li>`)
+        tag_nav.after(`<li>
+        <input type="checkbox" class="btn-check" id="tag${i}" value="${tags[i].fields.name}" autocomplete="off">
+        <label class="btn btn-outline-primary text-muted" for="tag${i}">#${tags[i].fields.name}</label>
+        </li>`)
+        // <li><label for="tag' + i + '">#' + tags[i].fields.name + '</label><input id="tag' + i + '" value="' + tags[i].fields.name + '" type="checkbox"></li>'
     }
     tag_box.append('<input class="tag_all" type="text">')
 
