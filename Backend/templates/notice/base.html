@@ -21,11 +21,11 @@
 
 <body>
     <div class="container-fluid p-0 wrapper">
-        <header>
+        <header class="">
             <div class="banner_box">
                 <div class="row main_banner">
                     <div class="col-md-6 banner_title">
-                        <a class="" href="/">인포모아</a>
+                        <a class="" href="/" onclick="$(header).removeClass('header_fix')">인포모아</a>
                     </div>
                     <div class="col-md-6">
                         <form class="banner_sub h-100" method="GET">
@@ -39,6 +39,7 @@
         {% block content %}{% endblock %}
     </div>
 </body>
+<script src="{% static 'notice/main.js '%}"></script>
 {% block script %}{% endblock %}
 
 </html>

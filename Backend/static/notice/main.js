@@ -28,6 +28,8 @@ navs.on('click', function(e) {
 
             $('.content').html(data.posts)
             add_pagination(data)
+            get_tags(data)
+            tags_effect()
 
         },
         error: function(e) {
@@ -222,3 +224,10 @@ function tags_effect() {
 }
 
 // 태그 추가하기(ajax 구현필요)
+document.addEventListener('scroll', function() {
+    if (window.scrollY > 54) {
+        $('header').addClass('header_fix')
+    } else {
+        $('header').removeClass('header_fix')
+    }
+})
