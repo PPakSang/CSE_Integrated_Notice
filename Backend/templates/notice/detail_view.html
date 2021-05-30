@@ -6,14 +6,16 @@
 
     <div class="row content_box mx-auto">
         <div class="row detail_title mb-5">
-            <h1>{{title|safe}} <br> <small class="text-muted">{{author}}{{date}}</small></h1>
+            <h1>{{ title|safe }} <br> <small class="text-muted">{{ author }}{{ date }}</small></h1>
         </div>
         <div class="row" id="contents">{{ contents|safe }}</div>
+        <div id="attach"></div>
     </div>
+
 </section>
 {% endblock %} {% block script %}
 <script type="text/javascript">
-    var attach_info = '{{ post.attachment_info }}'.replace(/&quot;/g, '"');
+    var attach_info = '{{ attch }}'.replace(/&quot;/g, '"');
     var data = JSON.parse(attach_info)
 
     window.onload = function() {
