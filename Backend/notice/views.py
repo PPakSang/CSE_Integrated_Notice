@@ -48,10 +48,13 @@ def getPageInfo(request):
     posts_len = int(posts.count())//11+1
     posts = posts[10*(page_num-1):10*page_num]
     posts = render_to_string('notice/post_list.html',{"posts":posts})
+    tags = Tag.objects.filter(origin=post_origin)
+    tags = serializers.serialize("json", tags)
     
     context = {
         "posts":posts,
-        "posts_len":posts_len
+        "posts_len":posts_len,
+        "tags": tags
     }
     context = json.dumps(context)
     return HttpResponse(context)
