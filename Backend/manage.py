@@ -66,7 +66,7 @@ def getData(origin):
             if not (isExisted(post)):
                 post.post_author = p.find("td", class_="bbs_writer").text
                 post.post_date = p.find("td", class_="bbs_date").text
-                post.post_origin = f"컴퓨터학부_{typeEnum[origin]}"
+                post.post_origin = "컴퓨터학부"
 
                 # 게시글 내용 확인하기 위해 GET 요청
                 data = requests.get(post.post_url, headers=headers).text

@@ -6,6 +6,7 @@ from django.db.models.base import Model
 
 class Tag(models.Model):
     name = models.CharField(max_length=10)
+    origin = models.CharField(max_length=20)
     def __str__(self) -> str:
         return self.name
 

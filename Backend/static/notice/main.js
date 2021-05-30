@@ -118,7 +118,7 @@ var pages
 $.ajax({
     url: "getpageinfo/",
     data: {
-        "origin": '컴퓨터학부_전체',
+        "origin": '컴퓨터학부',
         "num": 1,
         "tags": ""
     },
