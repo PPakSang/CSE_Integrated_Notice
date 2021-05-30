@@ -1,7 +1,13 @@
 {% extends 'notice/base.html' %} {% load static %} {% block title %} detail {% endblock %} {% block content %}
-<link rel="stylesheet" href="{% static 'notice/post_list.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{% static 'notice/detail.css' %}">
 <section>
-    <div class="content_box">
+
+    <div class="row content_box mx-auto">
+        <div class="row detail_title mb-5">
+            <h1>{{title|safe}} <br> <small class="text-muted">{{author}}{{date}}</small></h1>
+        </div>
         <div class="row" id="contents">{{ contents|safe }}</div>
     </div>
 </section>
