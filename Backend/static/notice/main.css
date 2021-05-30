@@ -78,7 +78,11 @@ header input {
     font-size: 3.6rem;
 }
 
-#search {
+.search {
+    font-size: 1.5rem;
+}
+
+.search_ico {
     font-size: 1.8rem;
     cursor: pointer;
     margin-left: 1rem;

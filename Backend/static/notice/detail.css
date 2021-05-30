@@ -1,9 +1,13 @@
 .content_box {
     margin-top: 5rem;
     max-width: 99rem;
-    padding: 8rem;
+    padding: 3rem;
 }
 
 img {
     width: 50rem !important;
+}
+
+.detail_title {
+    border-bottom: 1px solid gainsboro;
 }

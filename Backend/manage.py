@@ -26,7 +26,7 @@ headers = {
 }
 
 def getData(origin):
-    return
+
     # return
     typeEnum = ("전체", "", "학사", "심컴", "글솝")
 
