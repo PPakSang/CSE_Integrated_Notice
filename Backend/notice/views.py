@@ -32,27 +32,27 @@ def mainview(request):
 
 
 def getPageInfo(request):
-    # print(request.GET['origin'])
-    post_origin = request.GET['origin']
-    # print(request.GET['num'])
     page_num = int(request.GET['num'])
-    # print(request.GET['tags'].split(','))
-    tags = request.GET['tags'].split(',')
-    posts = Uni_post.objects.filter(post_origin=post_origin,).order_by("-post_date")
-    if request.GET['tags'].split(',') == ['']: #해당 origin post 전체 호출
-        posts = posts
-    else: #태그가 넘어왔을시
-        for tag in tags:
-            posts = posts.filter(tags__name = tag)
-    
-    # print(posts.count())
-    
+    keyword = request.GET.get("search", None)
+    # 검색 시
+    if (keyword):
+        posts = Uni_post.objects.filter(post_title__icontains=keyword).order_by("-post_date")
+    else:
+        post_origin = request.GET['origin']
+        tags = request.GET['tags'].split(',')
+        posts = Uni_post.objects.filter(post_origin=post_origin).order_by("-post_date")
+        if request.GET['tags'].split(',') == ['']:  # 해당 origin post 전체 호출
+            posts = posts
+        else: # 태그가 넘어왔을시
+            for tag in tags:
+                posts = posts.filter(tags__name=tag)
+        tags = Tag.objects.filter(origin=post_origin).order_by("-name")
+        tags = serializers.serialize("json", tags)
+
     posts_len = int(posts.count())//11+1
     posts = posts[10*(page_num-1):10*page_num]
-    posts = render_to_string('notice/post_list.html',{"posts":posts})
-    tags = Tag.objects.filter(origin=post_origin).order_by("-name")
-    tags = serializers.serialize("json", tags)
-    # print(tags)
+    posts = render_to_string('notice/post_list.html', {"posts": posts})
+
     context = {
         "posts": posts,
         "posts_len": posts_len,
