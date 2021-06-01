@@ -1,3 +1,24 @@
+var pages
+$.ajax({
+        url: "getpageinfo/",
+        data: {
+            "origin": '컴퓨터학부',
+            "num": 1,
+            "tags": ""
+        },
+        dataType: "json",
+        success: function(data) {
+            $('.content').html(data.posts)
+            add_pagination(data)
+            get_tags(data)
+            tags_effect()
+
+
+        },
+        error: function(e) {
+
+        }
+    })
 // initialize
 
 
@@ -115,27 +136,7 @@ function add_pagination(data) {
 
 
 
-var pages
-$.ajax({
-    url: "getpageinfo/",
-    data: {
-        "origin": '컴퓨터학부',
-        "num": 1,
-        "tags": ""
-    },
-    dataType: "json",
-    success: function(data) {
-        $('.content').html(data.posts)
-        add_pagination(data)
-        get_tags(data)
-        tags_effect()
 
-
-    },
-    error: function(e) {
-
-    }
-})
 
 
 
@@ -224,6 +225,13 @@ function tags_effect() {
 }
 
 // 태그 추가하기(ajax 구현필요)
+
+
+
+
+
+
+// 상단 fixed
 document.addEventListener('scroll', function() {
     if (window.scrollY > 54) {
         $('header').addClass('header_fix')
