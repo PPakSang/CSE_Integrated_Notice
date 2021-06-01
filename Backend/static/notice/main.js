@@ -31,9 +31,13 @@ var nav_title = $('.nav_title');
 navs.on('click', function(e) {
     $('.tag_box label').removeClass('text-muted');
     $('input:checked').prop('checked', false);
+    
+    
 
     navs.removeClass('active');
     this.classList.add('active');
+    navs.removeClass('fw-bold')
+    e.target.classList.add('fw-bold')
     nav_title.text(this.innerText + ' 공지사항');
     $.ajax({
         url: "getpageinfo/",
@@ -58,7 +62,7 @@ navs.on('click', function(e) {
         }
 
     })
-
+    
 })
 
 // 종합, 컴퓨터학부 ...
@@ -157,14 +161,15 @@ function get_tags(data) {
     tag_box.html('<li class="tag_nav"><i class="bi bi-chevron-down"></i></li>')
     var tag_nav = $('.tag_nav')
     tags = JSON.parse(data.tags)
-    console.log(tags)
+    // console.log(tags)
     for (i = tags.length - 1; i >= 0; i--) {
         tags[i].fields.name
-        tag_nav.after(`<li>
-        <input type="checkbox" class="btn-check" id="tag${i}" value="${tags[i].fields.name}" autocomplete="off">
-        <label class="btn btn-outline-primary text-muted" for="tag${i}">#${tags[i].fields.name}</label>
-        </li>`)
-        // <li><label for="tag' + i + '">#' + tags[i].fields.name + '</label><input id="tag' + i + '" value="' + tags[i].fields.name + '" type="checkbox"></li>'
+        tag_nav.after('<li class="tag"><label class="tag_list text-muted" for="tag' + i + '">#' + tags[i].fields.name + '</label><input id="tag' + i + '" value="' + tags[i].fields.name + '" type="checkbox"></li>')
+        // `<li>
+        // <input type="checkbox" class="btn-check" id="tag${i}" value="${tags[i].fields.name}" autocomplete="off">
+        // <label class="btn btn-outline-primary" for="tag${i}">#${tags[i].fields.name}</label>
+        // </li>`
+        
     }
     tag_box.append('<input class="tag_all" type="text">')
 
@@ -183,7 +188,7 @@ function tags_effect() {
     var tag_var = $('.tag_box i')
 
     tag_var.on('click', function() {
-        console.log(1)
+        // console.log(1)
         tag_var[0].classList.toggle('bi-chevron-down')
         tag_var[0].classList.toggle('bi-chevron-up')
         $('.tag_box')[0].classList.toggle('auto_height')
@@ -202,7 +207,7 @@ function tags_effect() {
         }
 
         tag_all.prop('value', data.toString())
-        console.log(tag_all.prop('value'))
+        // console.log(tag_all.prop('value'))
 
         $.ajax({
             url: "getpageinfo/",
@@ -224,6 +229,7 @@ function tags_effect() {
     })
 
     tag_label.on('click', function() {
+        this.classList.toggle('fw-bold')
         this.classList.toggle('text-muted')
     })
 }

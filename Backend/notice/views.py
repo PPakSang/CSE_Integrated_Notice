@@ -30,11 +30,11 @@ def mainview(request):
     return render(request, 'notice/main.html')
 
 def getPageInfo(request):
-    print(request.GET['origin'])
+    # print(request.GET['origin'])
     post_origin = request.GET['origin']
-    print(request.GET['num'])
+    # print(request.GET['num'])
     page_num = int(request.GET['num'])
-    print(request.GET['tags'].split(','))
+    # print(request.GET['tags'].split(','))
     tags = request.GET['tags'].split(',')
     posts = Uni_post.objects.filter(post_origin=post_origin,).order_by("-post_date")
     if request.GET['tags'].split(',') == ['']: #해당 origin post 전체 호출
@@ -43,14 +43,14 @@ def getPageInfo(request):
         for tag in tags:
             posts = posts.filter(tags__name = tag)
     
-    print(posts.count())
+    # print(posts.count())
     
     posts_len = int(posts.count())//11+1
     posts = posts[10*(page_num-1):10*page_num]
     posts = render_to_string('notice/post_list.html',{"posts":posts})
     tags = Tag.objects.filter(origin=post_origin).order_by("-name")
     tags = serializers.serialize("json", tags)
-    print(tags)
+    # print(tags)
     context = {
         "posts":posts,
         "posts_len":posts_len,
