@@ -114,6 +114,33 @@ function add_pagination(data) {
 }
 
 
+function setSearchResult() {
+    var keyword = $(".search").val();
+    if (keyword != "") {
+        $.ajax({
+            url: "getpageinfo/",
+            data: {
+                "search": keyword,
+                "num": 1
+            },
+            dataType: "json",
+            success: function (data) {
+                $('.content').html(data.posts)
+                add_pagination(data)
+                $(".tag_boundary").hide();
+            },
+            error: function (e) {
+                console.log("검색 오류")
+            }
+        })
+    }
+}
+$("#icon-search").click(setSearchResult());
+$("#search-box").keypress(function (e) {
+    if (e.keyCode == 13) {
+        setSearchResult();
+    }
+});
 
 var pages
 $.ajax({

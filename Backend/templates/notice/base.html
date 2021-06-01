@@ -28,10 +28,12 @@
                         <a class="" href="/" onclick="$(header).removeClass('header_fix')">인포모아</a>
                     </div>
                     <div class="col-md-6">
-                        <form class="banner_sub h-100" method="GET">
-                            <div><input autocomplete="off" class="search" name='search' type="text" placeholder="검색할 내용을 입력해주세요"></div>
-                            <div class="search_ico"><i class="bi bi-search"></i></div>
-                        </form>
+                        <div class="banner_sub h-100">
+                            <div>
+                                <input autocomplete="off" class="search" id="search-box" name='search' type="text" required placeholder="검색할 내용을 입력해주세요">
+                            </div>
+                            <div id="icon-search" class="search_ico"><i class="bi bi-search"></i></div>
+                        </div>
                     </div>
                 </div>
             </div>
