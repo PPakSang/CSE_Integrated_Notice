@@ -7,5 +7,5 @@ from .views import *
 urlpatterns = [
     path('', mainview, name='main'),
     path('getpageinfo/', getPageInfo, name='getpageinfo'),
-    path('detailview/<path:url>', detailview, name="detailview")
+    path('detailview/<path:url>', detailview, name="detailview"),
 ]

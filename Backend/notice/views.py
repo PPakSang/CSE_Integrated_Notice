@@ -12,22 +12,24 @@ from collections import OrderedDict
 from django.core import serializers
 
 # Create your views here.
+
+
 class Notice_listview(generic.ListView):
     model = Uni_post
     template_name = 'notice/notice_list.html'
     tag1 = Uni_post.objects.filter(tags__name='멘토링')
     tag2 = Uni_post.objects.filter(tags__name='대학원')
 
-
-    def get_context_data(self, **kwargs) :
+    def get_context_data(self, **kwargs):
         kwargs['tag1'] = self.tag1
         kwargs['tag2'] = self.tag2
 
         return super().get_context_data(**kwargs)
 
+
 def mainview(request):
-    # posts = Uni_post.objects.filter(post_origin='컴퓨터학부_전체')
     return render(request, 'notice/main.html')
+
 
 def getPageInfo(request):
     # print(request.GET['origin'])
@@ -52,13 +54,13 @@ def getPageInfo(request):
     tags = serializers.serialize("json", tags)
     # print(tags)
     context = {
-        "posts":posts,
-        "posts_len":posts_len,
-        "tags": tags
+        "posts": posts,
+        "posts_len": posts_len,
+        "tags": tags if not keyword else ""
     }
-    context = json.dumps(context)
+    context = json.dumps(context, ensure_ascii=False)
     return HttpResponse(context)
-    
+
 
 def detailview(request, url):
     qs = request.GET.urlencode()
@@ -71,8 +73,8 @@ def detailview(request, url):
     contents = contents.post_contents
     return render(request, "notice/detail_view.html", {
         "title": title,
-        "author" : author,
-        "date" : date,
-        "attch" : attch,
-        "contents" : contents,
+        "author": author,
+        "date": date,
+        "attch": attch,
+        "contents": contents,
     })
