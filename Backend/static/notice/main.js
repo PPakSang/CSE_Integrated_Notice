@@ -160,7 +160,11 @@ function setSearchResult() {
         })
     }
 }
-$("#icon-search").click(setSearchResult());
+var icons = $("#icon-search")
+icons.on('click',function(){
+    setSearchResult()
+})
+
 $("#search-box").keypress(function (e) {
     if (e.keyCode == 13) {
         setSearchResult();
