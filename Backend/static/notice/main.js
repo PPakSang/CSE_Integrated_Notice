@@ -28,7 +28,7 @@ var nav_title = $('.nav_title');
 
 
 // origin 클릭했을때
-navs.on('click', function(e) {
+navs.off('click').on('click', function(e) {
     $('.tag_box label').removeClass('text-muted');
     $('input:checked').prop('checked', false);
     
@@ -70,7 +70,7 @@ var first_page = $('.page_num')
 
 
 function add_pagination(data) {
-    var page_html = "<li class='lbtn page-item disabled'><a class='page-link' tabindex='-1' aria-disabled='true'>&laquo;</a></li>"
+    var page_html = "<li class='lbtn page-item disabled'><a class='page-link' taonex='-1' aria-disabled='true'>&laquo;</a></li>"
     var pagination = $('.pagination')
         // console.log(data.posts_len)
     for (i = 1; i <= data.posts_len; i++) {
@@ -90,6 +90,7 @@ function add_pagination(data) {
             url: "getpageinfo/",
             data: {
                 "origin": $('.nav-link.active').text(),
+                "search": $(".search").val(),
                 "num": $('.page-item.active').text(),
                 "tags": ""
             },
@@ -160,12 +161,14 @@ function setSearchResult() {
         })
     }
 }
-var icons = $("#icon-search")
-icons.on('click',function(){
-    setSearchResult()
+
+$("#icon-search").off('click').on('click', function(e) {
+    e.preventDefault();
+    setSearchResult();
 })
 
-$("#search-box").keypress(function (e) {
+$("#search-box").off('keypress').on('keypress', function (e) {
+    e.preventDefault();
     if (e.keyCode == 13) {
         setSearchResult();
     }
