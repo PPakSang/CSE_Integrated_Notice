@@ -173,6 +173,10 @@ def main():
     execute_from_command_line(sys.argv)
 
 if __name__ == '__main__':
-    for post in Uni_post.objects.all():
-        post.delete()
+    if (sys.argv[1] == "dropall"):
+        for post in Uni_post.objects.all():
+            post.delete()
+            pass
+        print("저장된 모든 게시물을 삭제했습니다.")
+        sys.exit(0)
     main()
