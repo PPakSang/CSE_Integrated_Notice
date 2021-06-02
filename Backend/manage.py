@@ -2,6 +2,7 @@
 # pyright: reportMissingImports=false
 """Django's command-line utility for administrative tasks."""
 from bs4 import BeautifulSoup as bs
+from urllib import parse
 import threading
 import requests
 import django
@@ -29,10 +30,11 @@ def getData(origin):
     # return
     typeEnum = ("전체", "", "학사", "심컴", "글솝")
 
-    def get_page_url(notice_type=2):
+    def get_page_url(notice_type=2, page=1):
         # 학사:2, 심컴:3, 글솝:4
         notice_type = f"_{notice_type}" if notice_type else ""
-        return f"http://computer.knu.ac.kr/06_sub/02_sub{notice_type}.html"
+        pageinfo = f"?page={page}"
+        return f"http://computer.knu.ac.kr/06_sub/02_sub{notice_type}.html{pageinfo}"
 
     def isExisted(post):
         try:
@@ -66,9 +68,16 @@ def getData(origin):
 
         return tag_result if tag_result else ["기타"]
 
+    page = 1
     while (True):
-        req = requests.get(get_page_url(origin), headers=headers)
-        notice_list = bs(req.text, "html.parser").find("table", class_="table").find("tbody").find_all("tr")
+        req = requests.get(get_page_url(origin, page), headers=headers)
+        soup = bs(req.text, "html.parser")
+        try:
+            lastpage = int(parse.parse_qs(soup.find_all("a", class_="paging-arrow")[-1]["href"][1:])["page"][0])
+        except IndexError:
+            lastpage = 1
+
+        notice_list = soup.find("table", class_="table").find("tbody").find_all("tr")
 
         for p in notice_list:
             # 상단 고정된 공지사항일 경우 크롤링하지 않음
@@ -77,7 +86,7 @@ def getData(origin):
 
             # 게시물 인스턴스 생성 후 값 저장
             post = Uni_post()
-            post.post_url = f"{get_page_url(origin)}{p.find('a').get('href')}"
+            post.post_url = f"{get_page_url(origin, page)}{p.find('a').get('href')}"
             post.post_title = p.find('a').get("title")
 
             # DB에 존재하지 않는 게시글일 경우 게시글 내용 크롤링하여 저장
@@ -123,8 +132,12 @@ def getData(origin):
                 # M2M 필드(게시물 태그) 설정
                 setPostTag(post, f"컴학_{typeEnum[origin]}", *getPostTag(post.post_title, contents.get_text()))
 
-        print(f"---------------{threading.current_thread().name}, {typeEnum[origin]}---------------")
-        time.sleep(60)
+        print(f"---------------{threading.current_thread().name}, {typeEnum[origin]}, {page}/{lastpage}---------------")
+        if (page >= lastpage):
+            page = 1
+            time.sleep(60)
+        else:
+            page += 1
         # break  # 원래는 딜레이 주고 무한반복 돌면서 새 글이 올라오는지 확인해야 함
 
 

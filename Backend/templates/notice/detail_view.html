@@ -8,11 +8,13 @@
 <section>
 
     <div class="row content_box mx-auto">
-        <div class="row title_box mb-5">
+        <div class="row">
             <h1 class="title">{{ title|safe }} <br> <small class="text-muted">{{ author }}{{ date }}</small></h1>
         </div>
+        <hr class="my-4">
         <small><div class="mb-3" id="attach"></div></small>
-        <div class="row" id="contents">{{ contents|safe }}</div>
+        <hr class="my-4">
+        <div class="row" id="contents" style="line-height: 1.0 !important;">{{ contents|safe }}</div>
     </div>
 
 </section>
@@ -30,8 +32,12 @@
 
         $.each(data, function(i, dt) {
             const key = Object.keys(data).find(key => data[key] === dt);
-            $(makeTable).append(`<tr><td><a href="${dt}">${key}</a></td></tr>`);
+            $(makeTable).append(`<tr><td><i class="bi bi-file-earmark-text-fill" style="color: #0B68F0;"></i></td><td><a href="${dt}" style="color: #0B68F0 !important;">${key}</a></td></tr>`);
         });
+
+        if (Object.keys(data).length == 0) {
+            $(makeTable).append("<tr><td><small class='text-muted'>첨부파일이 없습니다.</small></td><tr>");
+        }
     }
 </script>
 {% endblock %}
