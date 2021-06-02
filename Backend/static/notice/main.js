@@ -163,12 +163,10 @@ function setSearchResult() {
 }
 
 $("#icon-search").off('click').on('click', function(e) {
- 
     setSearchResult();
 })
 
 $("#search-box").off('keypress').on('keypress', function (e) {
-   
     if (e.keyCode == 13) {
         setSearchResult();
     }

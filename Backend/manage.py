@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # pyright: reportMissingImports=false
-"""Django's command-line utility for administrative tasks."""
 from bs4 import BeautifulSoup as bs
 from urllib import parse
 import threading
@@ -56,7 +55,10 @@ def getData(origin):
             "대회": ("대회", ),
             "장학금": ("장학금", "장학생", "장학재단"),
             "마일리지": ("마일리지", ),
-            "근로/튜터": ("근로", "튜터", "TUTOR", "tutor", "Tutor")
+            "근로/튜터": ("근로", "튜터", "TUTOR", "tutor", "Tutor"),
+            "졸업": ("졸업", ),
+            "휴/복학": ("휴학", "복학"),
+            "SW 중심대학": ("[SW중심대학]", )
         }
         tag_result = []
 
@@ -68,16 +70,24 @@ def getData(origin):
 
         return tag_result if tag_result else ["기타"]
 
-    page = 1
-    while (True):
-        req = requests.get(get_page_url(origin, page), headers=headers)
-        soup = bs(req.text, "html.parser")
+    current_page = 1
+    req = requests.get(get_page_url(origin, current_page), headers=headers)
+    soup = bs(req.text, "html.parser")
+
+    # DB에 저장된 게시물의 총 개수가 50개 미만이면 최대 5페이지를 한번에 크롤링
+    if (Uni_post.objects.all().count() < 50):
         try:
             lastpage = int(parse.parse_qs(soup.find_all("a", class_="paging-arrow")[-1]["href"][1:])["page"][0])
         except IndexError:
             lastpage = 1
+        finally:
+            lastpage = min(lastpage, 5)
+    else:
+        lastpage = 1
 
-        notice_list = soup.find("table", class_="table").find("tbody").find_all("tr")
+    while (True):
+        req = requests.get(get_page_url(origin, current_page), headers=headers)
+        notice_list = bs(req.text, "html.parser").find("table", class_="table").find("tbody").find_all("tr")
 
         for p in notice_list:
             # 상단 고정된 공지사항일 경우 크롤링하지 않음
@@ -132,12 +142,13 @@ def getData(origin):
                 # M2M 필드(게시물 태그) 설정
                 setPostTag(post, f"컴학_{typeEnum[origin]}", *getPostTag(post.post_title, contents.get_text()))
 
-        print(f"---------------{threading.current_thread().name}, {typeEnum[origin]}, {page}/{lastpage}---------------")
-        if (page >= lastpage):
-            page = 1
-            time.sleep(60)
+        print(f"---------------{threading.current_thread().name}, {typeEnum[origin]}, {current_page}/{lastpage}---------------")
+        if (current_page < lastpage):
+            current_page += 1
         else:
-            page += 1
+            lastpage = 1
+            current_page = 1
+            time.sleep(10)
         # break  # 원래는 딜레이 주고 무한반복 돌면서 새 글이 올라오는지 확인해야 함
 
 
@@ -165,4 +176,3 @@ if __name__ == '__main__':
     for post in Uni_post.objects.all():
         post.delete()
     main()
-
