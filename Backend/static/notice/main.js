@@ -9,7 +9,7 @@ $.ajax({
         dataType: "json",
         success: function(data) {
             $('.content').html(data.posts)
-            add_pagination(data)
+            add_pagination(1,data.posts_len)
             get_tags(data)
             tags_effect()
 
@@ -52,7 +52,7 @@ navs.off('click').on('click', function(e) {
         success: function(data) {
 
             $('.content').html(data.posts)
-            add_pagination(data)
+            add_pagination(1,data.posts_len)
             get_tags(data)
             tags_effect()
 
@@ -69,11 +69,14 @@ navs.off('click').on('click', function(e) {
 var first_page = $('.page_num')
 
 
-function add_pagination(data) {
-    var page_html = "<li class='lbtn page-item disabled'><a class='page-link' taonex='-1' aria-disabled='true'>&laquo;</a></li>"
+function add_pagination(num,max_len) {
+    var page_html = "<li class='lbtn page-item'><a class='page-link' taonex='-1' aria-disabled='true'>&laquo;</a></li>"
     var pagination = $('.pagination')
         // console.log(data.posts_len)
-    for (i = 1; i <= data.posts_len; i++) {
+    for (i = num; i <num+5; i++) {
+        if(i > max_len){
+            break;
+        }
         page_html = page_html + '<li class="page_num page-item"><a class="page-link">' + i + '</a></li>'
     }
     page_html = page_html + "<li class='rbtn page-item'><a class='page-link'>&raquo;</a></li>"
@@ -99,22 +102,12 @@ function add_pagination(data) {
                 $('.content').html(data.posts)
             }
         })
-
-
-
-        if (e.target.innerText == pages.length.toString()) {
-            $('.pagination .rbtn').addClass('disabled')
-        } else {
-            $('.pagination .rbtn').removeClass('disabled')
-        }
-        if (e.target.innerText == 1) {
-            $('.pagination .lbtn').addClass('disabled')
-        } else {
-            $('.pagination .lbtn').removeClass('disabled')
-        }
     })
     var lbtn = $('.lbtn')
     var rbtn = $('.rbtn')
+    if (num == 1){
+        lbtn.addClass('disabled')
+    }
     lbtn.on('click', function() {
         if (lbtn.hasClass('disabled')) {
             return;
@@ -122,19 +115,26 @@ function add_pagination(data) {
             var active_page = $('.pagination .active');
             var page_all = $('.page_num');
             // console.log(page_all.index(active_page));
-            page_all[page_all.index(active_page) - 1].click()
+            // page_all[page_all.index(active_page) - 1].click()
+            add_pagination(num-5,max_len)
         }
     })
+    console.log(num,max_len)
+    if (num+5 > max_len){
+        
+        rbtn.addClass('disabled')
+    }
 
     rbtn.on('click', function() {
-
         if (rbtn.hasClass('disabled')) {
             return;
         } else {
             var active_page = $('.pagination .active');
             var page_all = $('.page_num');
             // console.log(page_all.index(active_page));
-            page_all[page_all.index(active_page) + 1].click()
+            // page_all[page_all.index(active_page) + 1].click()
+            add_pagination(num+5,max_len)
+            
         }
     })
 }
@@ -152,7 +152,7 @@ function setSearchResult() {
             dataType: "json",
             success: function (data) {
                 $('.content').html(data.posts)
-                add_pagination(data)
+                add_pagination(1,data.posts_len)
                 $(".tag_boundary").hide();
             },
             error: function (e) {
@@ -163,12 +163,12 @@ function setSearchResult() {
 }
 
 $("#icon-search").off('click').on('click', function(e) {
-    e.preventDefault();
+ 
     setSearchResult();
 })
 
 $("#search-box").off('keypress').on('keypress', function (e) {
-    e.preventDefault();
+   
     if (e.keyCode == 13) {
         setSearchResult();
     }
@@ -198,21 +198,12 @@ function get_tags(data) {
     // console.log(tags)
     for (i = tags.length - 1; i >= 0; i--) {
         tags[i].fields.name
-        tag_nav.after('<li class="tag"><label class="tag_list text-muted" for="tag' + i + '">#' + tags[i].fields.name + '</label><input id="tag' + i + '" value="' + tags[i].fields.name + '" type="checkbox"></li>')
-        // `<li>
-        // <input type="checkbox" class="btn-check" id="tag${i}" value="${tags[i].fields.name}" autocomplete="off">
-        // <label class="btn btn-outline-primary" for="tag${i}">#${tags[i].fields.name}</label>
-        // </li>`
-        
+        tag_nav.after('<li class="tag"><label class="tag_list text-muted" for="tag' + i + '">#' + tags[i].fields.name + '</label><input id="tag' + i + '" value="' + tags[i].fields.name + '" type="checkbox"></li>')    
     }
     tag_box.append('<input class="tag_all" type="text">')
 
 }
 
-
-// for (i = 0; i < 20; i++) {
-//     tag_all.before('<li><label for="tag' + i + '">#멘토링' + i + '</label><input id="tag' + i + '" value="컴학_전체" type="checkbox"></li>')
-// }
 
 // 태그들 다 집어넣고 그 태그에 효과 붙이기
 function tags_effect() {
@@ -247,13 +238,13 @@ function tags_effect() {
             url: "getpageinfo/",
             data: {
                 "origin": $('.nav-link.active').text(),
-                "num": $('.page-item.active').text(),
+                "num": 1,
                 "tags": tag_all.prop('value')
             },
             dataType: "json",
             success: function(data) {
                 $('.content').html(data.posts)
-                add_pagination(data)
+                add_pagination(1,data.posts_len)
             }
 
         })
@@ -276,10 +267,3 @@ function tags_effect() {
 
 
 // 상단 fixed
-document.addEventListener('scroll', function() {
-    if (window.scrollY > 54) {
-        $('header').addClass('header_fix')
-    } else {
-        $('header').removeClass('header_fix')
-    }
-})

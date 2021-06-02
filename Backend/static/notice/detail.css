@@ -8,6 +8,10 @@ img {
     width: 50rem !important;
 }
 
-.detail_title {
-    border-bottom: 1px solid gainsboro;
+.title_box{
+    border-bottom: 1px solid gray;
+}
+
+.title {
+    line-height: 5rem;
 }

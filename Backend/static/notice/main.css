@@ -64,12 +64,18 @@ header {
 .main_banner {
     margin: auto;
     max-width: 99rem;
+    min-height: 7rem;
     color: white;
 }
 
 .main_banner a {
     color: white !important;
     font-weight: bold;
+}
+
+.banner_title{
+    display: flex;
+    align-items: center;
 }
 
 .banner_sub {
@@ -198,6 +204,7 @@ button {
 
 .content_box {
     max-width: 99rem;
+    min-height: 50rem;
     padding: 2rem;
     font-size: 2rem;
     margin: auto;
@@ -238,7 +245,7 @@ button {
         font-size: 50% !important;
     }
     .banner_title {
-        text-align: center;
+        justify-content: center;
     }
     .banner_sub {
         text-align: center;

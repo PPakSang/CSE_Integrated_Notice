@@ -41,7 +41,7 @@ def getPageInfo(request):
         post_origin = request.GET['origin']
         tags = request.GET['tags'].split(',')
         posts = Uni_post.objects.filter(post_origin=post_origin).order_by("-post_date")
-        if request.GET['tags'].split(',') == ['']:  # 해당 origin post 전체 호출
+        if tags == ['']:  # 해당 origin post 전체 호출
             posts = posts
         else: # 태그가 넘어왔을시
             for tag in tags:
