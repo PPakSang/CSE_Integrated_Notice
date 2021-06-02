@@ -30,10 +30,10 @@ def getData(origin):
     # return
     typeEnum = ("전체", "", "학사", "심컴", "글솝")
 
-    def get_page_url(notice_type=2, page=1):
+    def get_page_url(notice_type=2, page=0):
         # 학사:2, 심컴:3, 글솝:4
         notice_type = f"_{notice_type}" if notice_type else ""
-        pageinfo = f"?page={page}"
+        pageinfo = f"?page={page}" if page else ""
         return f"http://computer.knu.ac.kr/06_sub/02_sub{notice_type}.html{pageinfo}"
 
     def isExisted(post):
@@ -86,7 +86,7 @@ def getData(origin):
 
             # 게시물 인스턴스 생성 후 값 저장
             post = Uni_post()
-            post.post_url = f"{get_page_url(origin, page)}{p.find('a').get('href')}"
+            post.post_url = f"{get_page_url(origin)}{p.find('a').get('href')}"
             post.post_title = p.find('a').get("title")
 
             # DB에 존재하지 않는 게시글일 경우 게시글 내용 크롤링하여 저장
@@ -162,7 +162,7 @@ def main():
     execute_from_command_line(sys.argv)
 
 if __name__ == '__main__':
-    # for post in Uni_post.objects.all():
-    #     post.delete()
+    for post in Uni_post.objects.all():
+        post.delete()
     main()
 
