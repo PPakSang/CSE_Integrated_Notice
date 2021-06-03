@@ -239,6 +239,17 @@ button {
 }
 /* section */
 
+
+#topBtn{
+    font-size: 4rem;
+    position: fixed;
+    right: 5%;
+    bottom: 5%;
+}
+#topBtn :hover{
+    background-color: transparent;
+}
+
 @media (max-width: 768px) {
     html,
     body {
