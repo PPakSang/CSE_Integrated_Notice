@@ -43,6 +43,7 @@ navs.off('click').on('click', function(e) {
         url: "getpageinfo/",
         data: {
             "origin": e.target.text,
+            "search" : $(".search").val(),
             "num": 1,
             "tags": ""
         },
@@ -87,7 +88,7 @@ function add_pagination(num,max_len) {
     pages.on('click', function(e) {
         pages.removeClass('active');
         this.classList.add('active');
-
+        var tag_all = $('.tag_all')
 
         $.ajax({
             url: "getpageinfo/",
@@ -95,7 +96,7 @@ function add_pagination(num,max_len) {
                 "origin": $('.nav-link.active').text(),
                 "search": $(".search").val(),
                 "num": $('.page-item.active').text(),
-                "tags": ""
+                "tags": tag_all.val()
             },
             dataType: "json",
             success: function(data) {
@@ -141,19 +142,21 @@ function add_pagination(num,max_len) {
 
 
 function setSearchResult() {
-    var keyword = $(".search").val();
+    var keyword = $(".search").val()
     if (keyword != "") {
         $.ajax({
             url: "getpageinfo/",
             data: {
-                "search": keyword,
+                "search": $(".search").val(),
                 "num": 1
             },
             dataType: "json",
             success: function (data) {
                 $('.content').html(data.posts)
-                add_pagination(1,data.posts_len)
+                $('.nav_box').hide();
                 $(".tag_boundary").hide();
+                $('.nav_title').html($(".search").val()+"에 대한 검색결과입니다.")
+                add_pagination(1,data.posts_len)
             },
             error: function (e) {
                 console.log("검색 오류")
@@ -256,12 +259,3 @@ function tags_effect() {
         this.classList.toggle('text-muted')
     })
 }
-
-// 태그 추가하기(ajax 구현필요)
-
-
-
-
-
-
-// 상단 fixed
