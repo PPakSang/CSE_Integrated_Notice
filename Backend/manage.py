@@ -253,6 +253,130 @@ def getData2():
             current_page = 1
             time.sleep(60)
 
+def getData3():
+    def get_page_url(page):
+        # 첫번째 페이지에서 나머지 페이지 파싱하는 방식
+
+        #첫번째 페이지
+        base_url = "https://gp.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1549935200"
+
+        if page > 10 :
+            page = 1
+
+        if page == 1 :
+            return base_url
+        else :
+            req = requests.get(base_url)
+            parsed_html = bs(req.text,"html.parser")
+            pages = parsed_html.find("div",class_="paging").find_all("a")
+            # 구조상 첫번째 a태그가 2부터 시작이다
+            href = pages[page-1]
+
+        return "https://gp.knu.ac.kr"+href
+
+    def isExisted(post):
+        try:
+            post.__class__. objects.get(post_url=post.post_url)
+        except Exception as e:
+            print("DB에 추가합니다.", post.post_title)
+            return False
+        else:
+            # print("이미 DB에 존재하는 공지사항입니다.", post.post_title)
+            return True
+
+    def setPostTag(post, *tagnames):
+        tags = list(map(lambda t: Tag.objects.get_or_create(name=t, origin=post.post_origin)[0], tagnames))
+        post.tags.add(*tags)
+
+    def getPostTag(title: str, contents: str) -> list:
+        tag_data = {
+            "세미나": ("세미나", ),
+            "대회": ("대회", ),
+            "장학금": ("장학금", "장학생", "장학재단"),
+            "마일리지": ("마일리지", ),
+            "근로/튜터": ("근로", "튜터", "TUTOR", "tutor", "Tutor"),
+            "졸업": ("졸업", ),
+            "휴/복학": ("휴학", "복학"),
+            "SW 중심대학": ("[SW중심대학]", )
+        }
+        tag_result = []
+
+        for tag in tag_data.keys():
+            for keyword in tag_data[tag]:
+                if (keyword in title or keyword in contents):
+                    tag_result.append(tag)
+                    break
+
+        return tag_result if tag_result else ["기타"]
+
+    current_page = 1
+    # DB에 저장된 게시물의 총 개수가 50개 미만이면 최대 5페이지를 한번에 크롤링
+    if (Uni_post.objects.all().count() < 50):
+        lastpage = 5
+    else:
+        lastpage = 1
+
+    while (True):
+        req = requests.get(get_page_url(current_page))
+        notice_list = bs(req.text, "html.parser").find("tbody").find_all("tr")
+        for p in notice_list:
+            # 0 == 공지 or 글 번호, 1 == 제목, 2 == 첨부파일, 3 == author, 4 == date, 5 == 조회수
+            p = p.find_all("td")
+
+            # 상단 고정된 공지사항일 경우 크롤링하지 않음
+            if (p[0].text == "공지"):
+                continue
+            
+            # 게시물 인스턴스 생성 후 값 저장
+            post = Uni_post()
+
+            #urlencode
+            #먼저 url을 parsing 한다 (path 기준으로 앞 뒤)
+            url = parse.urlparse("https://gp.knu.ac.kr" + (p[1].find("a").get("href")))
+            query = parse.parse_qs(url.query)
+            qs = parse.urlencode(query,doseq=True)
+            post.post_url =  f"https://gp.knu.ac.kr{url.path}?{qs}"
+            post.post_title = p[1].text.strip()
+            # DB에 존재하지 않는 게시글일 경우 게시글 내용 크롤링하여 저장
+            if not (isExisted(post)):
+                post.post_author = p[3].text
+                post.post_date = p[4].text
+                post.post_origin = "국제교류처"
+
+                # 게시글 내용 확인하기 위해 GET 요청
+                data = requests.get(post.post_url).text
+                # 게시글 내용 파싱
+                soup = bs(data, "html.parser")
+                contents = soup.find("div", class_="board_view")
+                contents.find("table").decompose()
+                # 첨부파일 정보 파싱 후 저장
+                try:
+                    attach = contents.find_all("li")
+                except AttributeError:
+                    post.attachment_info = {}
+                else:
+                    attach_url = list("https://gp.knu.ac.kr" + url.find("a").get("href")[5:] for url in attach)
+                    attach_name = map(lambda tag: tag.find("a").text, attach)
+                    attach_info = {title: url for title, url in zip(attach_name, attach_url)}
+                    post.attachment_info = json.dumps(attach_info, ensure_ascii=False)
+
+                # 게시글 내용 저장
+                post.post_contents = contents.prettify()
+
+                # 인스턴스 DB에 기록
+                post.save()
+                # M2M 필드(게시물 태그) 설정
+                setPostTag(post, *getPostTag(post.post_title, contents.get_text()))
+
+        print(f"---------------{threading.current_thread().name}, {'국제교류처'}, {current_page}/{lastpage}---------------")
+        if (current_page < lastpage):
+            current_page += 1
+        else:
+            lastpage = 1
+            current_page = 1
+            time.sleep(60)
+
+
 
 def main():
     # auto-reloader 프로세스가 아닌 Django 메인 프로세스일때만 크롤러 스레드 실행
@@ -262,6 +386,10 @@ def main():
             t.start()
             print(f"{t.name} 스레드 시작됨")
         th = [threading.Thread(target=getData2, name=f"th_crawler_knu", daemon=True) for i in (1, )]
+        for t in th:
+            t.start()
+            print(f"{t.name} 스레드 시작됨")
+        th = [threading.Thread(target=getData3, name=f"th_crawler_국제교류처", daemon=True) for i in (1, )]
         for t in th:
             t.start()
             print(f"{t.name} 스레드 시작됨")

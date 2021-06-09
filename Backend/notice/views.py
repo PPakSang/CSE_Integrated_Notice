@@ -11,6 +11,10 @@ import json
 from collections import OrderedDict
 from django.core import serializers
 
+
+
+
+
 # Create your views here.
 
 
@@ -62,6 +66,7 @@ def getPageInfo(request):
     return HttpResponse(context)
 
 
+
 def detailview(request, url):
     qs = request.GET.urlencode()
     url = f"{url}?{qs}"
@@ -71,6 +76,7 @@ def detailview(request, url):
     date = contents.post_date
     attch = contents.attachment_info
     contents = contents.post_contents
+
     return render(request, "notice/detail_view.html", {
         "title": title,
         "author": author,
@@ -78,3 +84,9 @@ def detailview(request, url):
         "attch": attch,
         "contents": contents,
     })
+
+
+
+
+
+    

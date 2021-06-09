@@ -70,6 +70,8 @@ navs.off('click').on('click', function(e) {
 var first_page = $('.page_num')
 
 
+
+//num -> 몇번부터 띄울건지, max_len 유효성 검사용
 function add_pagination(num,max_len) {
     var page_html = "<li class='lbtn page-item'><a class='page-link' taonex='-1' aria-disabled='true'>&laquo;</a></li>"
     var pagination = $('.pagination')
@@ -104,6 +106,7 @@ function add_pagination(num,max_len) {
             }
         })
     })
+    // 버튼추가
     var lbtn = $('.lbtn')
     var rbtn = $('.rbtn')
     if (num == 1){
@@ -120,7 +123,7 @@ function add_pagination(num,max_len) {
             add_pagination(num-5,max_len)
         }
     })
-    console.log(num,max_len)
+    // console.log(num,max_len)
     if (num+5 > max_len){
         
         rbtn.addClass('disabled')
@@ -141,6 +144,8 @@ function add_pagination(num,max_len) {
 }
 
 
+
+//  검색하였을 때
 function setSearchResult() {
     var keyword = $(".search").val()
     if (keyword != "") {

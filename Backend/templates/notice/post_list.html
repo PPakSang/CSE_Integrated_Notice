@@ -1,6 +1,7 @@
+{% load extra_tags %}
 {% for post in posts %}
 <li>
-    <a href="/detailview/{{ post.post_url }}" target="">{{post.post_title|safe}}</a>
+    <a href="/detailview/{{ post.post_url}}" target="">{{post.post_title|safe}}</a>
     <br>
     <small class="text-muted">{{post.post_author}} {{post.post_date}}</small>
 </li>
