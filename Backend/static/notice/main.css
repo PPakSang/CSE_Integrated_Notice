@@ -284,3 +284,7 @@ button {
 .fa-arrow-alt-circle-up {
     color: #D91A1A;
 }
+
+#post-info {
+    font-size: 1.2rem;
+}

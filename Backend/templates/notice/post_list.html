@@ -3,6 +3,6 @@
 <li>
     <a href="/detailview/{{ post.post_url}}" target="_blank">{{post.post_title|safe}}</a>
     <br>
-    <small class="text-muted">{{ post.post_origin }} {{post.post_author}} {{post.post_date}}</small>
+    <small class="text-muted" id="post-info">{{ post.post_origin }} {{post.post_author}} {{post.post_date}}</small>
 </li>
 {% endfor %}
