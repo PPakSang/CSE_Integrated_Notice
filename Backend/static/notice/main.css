@@ -269,15 +269,6 @@ button {
         text-align: center;
         justify-content: center;
     }
-    .tag_box {
-        width: 2000px;
-    }
-    .tag_boundary {
-        overflow: scroll;
-    }
-    .tag_nav {
-        display: none;
-    }
 }
 
 @media (max-width :992px) {
