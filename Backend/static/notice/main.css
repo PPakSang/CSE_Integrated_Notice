@@ -43,6 +43,10 @@ a{
 }
 
 
+.row{
+    margin: 0 !important;
+}
+
 /* initialize */
 
 .banner_box {
@@ -67,6 +71,7 @@ header {
     max-width: 99rem;
     min-height: 7rem;
     color: white;
+   
 }
 
 .main_banner a {
