@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    font-family: "Noto Sans KR", sans-serif;
 }
 
 .btn-sm {
@@ -139,6 +140,7 @@ button {
 
 .content li {
     padding: 1rem;
+    border-bottom: 1px solid #dadada;
 }
 
 .nav_title {
