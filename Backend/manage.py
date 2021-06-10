@@ -75,7 +75,7 @@ def getData(origin):
     soup = bs(req.text, "html.parser")
 
     # DB에 저장된 게시물의 총 개수가 50개 미만이면 최대 5페이지를 한번에 크롤링
-    if (Uni_post.objects.all().count() < 50):
+    if (Uni_post.objects.filter(post_origin = "컴퓨터학부").count() < 50):
         try:
             lastpage = int(parse.parse_qs(soup.find_all("a", class_="paging-arrow")[-1]["href"][1:])["page"][0])
         except IndexError:
@@ -193,7 +193,7 @@ def getData2():
 
     current_page = 1
     # DB에 저장된 게시물의 총 개수가 50개 미만이면 최대 5페이지를 한번에 크롤링
-    if (Uni_post.objects.all().count() < 50):
+    if (Uni_post.objects.filter(post_origin = "경북대학교 학사공지").count() < 50):
         lastpage = 5
     else:
         lastpage = 1
@@ -271,6 +271,11 @@ def getData3():
             pages = parsed_html.find("div",class_="paging").find_all("a")
             # 구조상 첫번째 a태그가 2부터 시작이다
             href = pages[page-1]
+        req = requests.get(base_url)
+        parsed_html = bs(req.text,"html.parser")
+        pages = parsed_html.find("div",class_="paging").find_all("a")
+        # 구조상 두번째 a태그가 0번째 array부터 시작이다
+        href = pages[page-2].get("href")
 
         return "https://gp.knu.ac.kr"+href
 
@@ -311,7 +316,7 @@ def getData3():
 
     current_page = 1
     # DB에 저장된 게시물의 총 개수가 50개 미만이면 최대 5페이지를 한번에 크롤링
-    if (Uni_post.objects.all().count() < 50):
+    if (Uni_post.objects.filter(post_origin = "국제교류처").count() < 50):
         lastpage = 5
     else:
         lastpage = 1
@@ -320,7 +325,7 @@ def getData3():
         req = requests.get(get_page_url(current_page))
         notice_list = bs(req.text, "html.parser").find("tbody").find_all("tr")
         for p in notice_list:
-            # 0 == 공지 or 글 번호, 1 == 제목, 2 == 첨부파일, 3 == author, 4 == date, 5 == 조회수
+            # p[n] 0 == 공지 or 글 번호, 1 == 제목, 2 == 첨부파일, 3 == author, 4 == date, 5 == 조회수
             p = p.find_all("td")
 
             # 상단 고정된 공지사항일 경우 크롤링하지 않음
@@ -348,18 +353,21 @@ def getData3():
                 # 게시글 내용 파싱
                 soup = bs(data, "html.parser")
                 contents = soup.find("div", class_="board_view")
-                contents.find("table").decompose()
                 # 첨부파일 정보 파싱 후 저장
                 try:
                     attach = contents.find_all("li")
                 except AttributeError:
                     post.attachment_info = {}
                 else:
-                    attach_url = list("https://gp.knu.ac.kr" + url.find("a").get("href")[5:] for url in attach)
-                    attach_name = map(lambda tag: tag.find("a").text, attach)
-                    attach_info = {title: url for title, url in zip(attach_name, attach_url)}
-                    post.attachment_info = json.dumps(attach_info, ensure_ascii=False)
+                    try:
+                        attach_url = list(("https://gp.knu.ac.kr" + url.find("a").get("href")[5:]) for url in attach)
+                        attach_name = map(lambda tag: tag.find("a").text, attach)
+                        attach_info = {title: url for title, url in zip(attach_name, attach_url)}
+                        post.attachment_info = json.dumps(attach_info, ensure_ascii=False)
+                    except: # 글중에 li 있으면 그냥 pass
+                        pass
 
+                contents.find("table").decompose()
                 # 게시글 내용 저장
                 post.post_contents = contents.prettify()
 
@@ -380,19 +388,19 @@ def getData3():
 
 def main():
     # auto-reloader 프로세스가 아닌 Django 메인 프로세스일때만 크롤러 스레드 실행
-    if (os.environ.get("RUN_MAIN")):
-        th = [threading.Thread(target=getData, name=f"th_crawler_{i}", args=(i, ), daemon=True) for i in (0, 2, 3, 4)]
-        for t in th:
-            t.start()
-            print(f"{t.name} 스레드 시작됨")
-        th = [threading.Thread(target=getData2, name=f"th_crawler_knu", daemon=True) for i in (1, )]
-        for t in th:
-            t.start()
-            print(f"{t.name} 스레드 시작됨")
-        th = [threading.Thread(target=getData3, name=f"th_crawler_국제교류처", daemon=True) for i in (1, )]
-        for t in th:
-            t.start()
-            print(f"{t.name} 스레드 시작됨")
+    # if (os.environ.get("RUN_MAIN")):
+    #     th = [threading.Thread(target=getData, name=f"th_crawler_{i}", args=(i, ), daemon=True) for i in (0, 2, 3, 4)]
+    #     for t in th:
+    #         t.start()
+    #         print(f"{t.name} 스레드 시작됨")
+    #     th = [threading.Thread(target=getData2, name=f"th_crawler_knu", daemon=True) for i in (1, )]
+    #     for t in th:
+    #         t.start()
+    #         print(f"{t.name} 스레드 시작됨")
+    #     th = [threading.Thread(target=getData3, name=f"th_crawler_국제교류처", daemon=True) for i in (1, )]
+    #     for t in th:
+    #         t.start()
+    #         print(f"{t.name} 스레드 시작됨")
 
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CIN.settings')
@@ -408,9 +416,9 @@ def main():
 
 if __name__ == '__main__':
     if (sys.argv[1] == "dropall"):
-        for post in Uni_post.objects.all():
-            post.delete()
-            pass
+        post = Uni_post.objects.filter(post_origin = '국제교류처')
+        post.delete()
+
         print("저장된 모든 게시물을 삭제했습니다.")
         sys.exit(0)
     main()

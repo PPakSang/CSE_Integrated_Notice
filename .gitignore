@@ -163,3 +163,13 @@ migrations/
 package-lock.json
 package.json
 node_modules/
+
+# Elastic Beanstalk Files
+.elasticbeanstalk
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+.ebextensions
+
+
+staticfiles
+test.py
