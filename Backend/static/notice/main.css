@@ -59,6 +59,18 @@ header {
     box-shadow: 0 0px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
+#icon-search{
+    height:3rem;
+    padding: 0 1rem;
+    background-color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+.bi-search{
+    color: red;
+}
+
 .header_fix {
     position: fixed;
     top: 0;
@@ -91,10 +103,13 @@ header {
     justify-content: flex-end;
 }
 
+.banner_search{
+    padding-right: 0 !important;
+}
+
 header input {
     width: 25rem;
     height: 3rem;
-    border-radius: 0.5rem;
     outline-style: none;
     border: none;
     padding-left: 1rem;
@@ -107,12 +122,6 @@ header input {
 .search {
     font-size: 1.5rem;
     margin: 5% 0% 5% 0%;
-}
-
-.search_ico {
-    font-size: 1.8rem;
-    cursor: pointer;
-    margin-left: 1rem;
 }
 
 
@@ -133,7 +142,7 @@ nav {
 }
 
 .nav_box li {
-    margin: 0 1rem;
+    margin-right: 1rem;
 }
 
 button {
@@ -147,10 +156,13 @@ button {
 .content li {
     padding: 1rem;
     border-bottom: 1px solid #dadada;
+    line-height: 2.5rem;
 }
 
 .nav_title {
     display: block;
+    font-weight: bold;
+    padding-left: 2rem;
 }
 
 .tag:hover{
@@ -236,6 +248,10 @@ button {
     cursor: default;
 }
 
+.pagination{
+    margin-top: 4rem;
+}
+
 
 .page-item.active .page-link{
     background-color: #ffd4007a !important;
@@ -258,6 +274,7 @@ button {
     margin:auto;
     max-width: 99rem;
     line-height: 2;
+    font-size: 1.3rem;
 }
 
 .pr_box *{

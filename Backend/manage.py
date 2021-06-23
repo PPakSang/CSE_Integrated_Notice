@@ -51,14 +51,17 @@ def getData(origin):
 
     def getPostTag(title: str, contents: str) -> list:
         tag_data = {
-            "세미나": ("세미나", ),
-            "대회": ("대회", ),
-            "장학금": ("장학금", "장학생", "장학재단"),
-            "마일리지": ("마일리지", ),
+            "CUBE/채용" : ("CUBE","cube","채용","인턴"),
             "근로/튜터": ("근로", "튜터", "TUTOR", "tutor", "Tutor"),
+            "대회": ("대회","콘테스트","공모전","특허청","아이디어","모각코"),
+            "마일리지": ("마일리지", ),
+            "세미나": ("세미나", ),
+            "인재개발원" : ("인재개발원","인재"),
+            "장학금": ("장학금", "장학생", "장학재단","학자금"),
             "졸업": ("졸업", ),
+            "창업" : ("창업"),
             "휴/복학": ("휴학", "복학"),
-            "SW 중심대학": ("[SW중심대학]", )
+            "SW 중심대학": ("[SW중심대학]", ),
         }
         tag_result = []
 
@@ -295,14 +298,13 @@ def getData3():
 
     def getPostTag(title: str, contents: str) -> list:
         tag_data = {
-            "세미나": ("세미나", ),
-            "대회": ("대회", ),
-            "장학금": ("장학금", "장학생", "장학재단"),
-            "마일리지": ("마일리지", ),
-            "근로/튜터": ("근로", "튜터", "TUTOR", "tutor", "Tutor"),
-            "졸업": ("졸업", ),
-            "휴/복학": ("휴학", "복학"),
-            "SW 중심대학": ("[SW중심대학]", )
+            "공모전": ("공모전", ),
+            "대외활동": ("대외활동", ),
+            "교내 프로그램": ("교내", "교내 프로그램", "교내프로그램"),
+            "유학": ("유학","복수학위","교환학생","아시아","유럽","미국"),
+            "강연/세미나": ("강연", "세미나"),
+            "취업/인턴": ("취업","인턴"),
+            "장학": ("장학"),
         }
         tag_result = []
 
@@ -388,19 +390,19 @@ def getData3():
 
 def main():
     # auto-reloader 프로세스가 아닌 Django 메인 프로세스일때만 크롤러 스레드 실행
-    # if (os.environ.get("RUN_MAIN")):
-    #     th = [threading.Thread(target=getData, name=f"th_crawler_{i}", args=(i, ), daemon=True) for i in (0, 2, 3, 4)]
-    #     for t in th:
-    #         t.start()
-    #         print(f"{t.name} 스레드 시작됨")
-    #     th = [threading.Thread(target=getData2, name=f"th_crawler_knu", daemon=True) for i in (1, )]
-    #     for t in th:
-    #         t.start()
-    #         print(f"{t.name} 스레드 시작됨")
-    #     th = [threading.Thread(target=getData3, name=f"th_crawler_국제교류처", daemon=True) for i in (1, )]
-    #     for t in th:
-    #         t.start()
-    #         print(f"{t.name} 스레드 시작됨")
+    if (os.environ.get("RUN_MAIN")):
+        th = [threading.Thread(target=getData, name=f"th_crawler_{i}", args=(i, ), daemon=True) for i in (0, 2, 3, 4)]
+        for t in th:
+            t.start()
+            print(f"{t.name} 스레드 시작됨")
+        th = [threading.Thread(target=getData2, name=f"th_crawler_knu", daemon=True) for i in (1, )]
+        for t in th:
+            t.start()
+            print(f"{t.name} 스레드 시작됨")
+        th = [threading.Thread(target=getData3, name=f"th_crawler_국제교류처", daemon=True) for i in (1, )]
+        for t in th:
+            t.start()
+            print(f"{t.name} 스레드 시작됨")
 
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CIN.settings')
@@ -416,7 +418,7 @@ def main():
 
 if __name__ == '__main__':
     if (sys.argv[1] == "dropall"):
-        post = Uni_post.objects.filter(post_origin = '국제교류처')
+        post = Uni_post.objects.all()
         post.delete()
 
         print("저장된 모든 게시물을 삭제했습니다.")
