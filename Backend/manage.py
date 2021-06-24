@@ -178,11 +178,11 @@ def getData2():
             "세미나": ("세미나", ),
             "대회": ("대회", ),
             "장학금": ("장학금", "장학생", "장학재단"),
-            "마일리지": ("마일리지", ),
+            "마일리지": ("마일리지",),
             "근로/튜터": ("근로", "튜터", "TUTOR", "tutor", "Tutor"),
-            "졸업": ("졸업", ),
+            "졸업": ("졸업",),
             "휴/복학": ("휴학", "복학"),
-            "SW 중심대학": ("[SW중심대학]", )
+            "SW 중심대학": ("[SW중심대학]",)
         }
         tag_result = []
 
@@ -200,7 +200,6 @@ def getData2():
         lastpage = 5
     else:
         lastpage = 1
-
     while (True):
         req = requests.get(get_page_url(current_page), headers=headers)
         notice_list = bs(req.text, "html.parser").find("div", class_="board_list").find("tbody").find_all("tr")
@@ -256,6 +255,7 @@ def getData2():
             current_page = 1
             time.sleep(60)
 
+#국제 교류처
 def getData3():
     def get_page_url(page):
         # 첫번째 페이지에서 나머지 페이지 파싱하는 방식
