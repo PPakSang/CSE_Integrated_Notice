@@ -41,7 +41,7 @@ def get_secret(setting, secrets=secrets):
 SECRET_KEY = get_secret("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -134,6 +134,9 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+SESSION_COOKIE_AGE = 3000  #세션 만료 시간
+SESSION_SAVE_EVERY_REQUEST = True #요청시마다 만료시간을 갱신할건지
 
 
 # Static files (CSS, JavaScript, Images)
