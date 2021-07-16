@@ -390,18 +390,18 @@ def getData3():
 def main():
     # auto-reloader 프로세스가 아닌 Django 메인 프로세스일때만 크롤러 스레드 실행
     # if (os.environ.get("RUN_MAIN")):
-    # th = [threading.Thread(target=getData, name=f"th_crawler_{i}", args=(i, ), daemon=True) for i in (0, 2, 3, 4)]
-    # for t in th:
-    #     t.start()
-    #     print(f"{t.name} 스레드 시작됨")
-    # th = [threading.Thread(target=getData2, name=f"th_crawler_knu", daemon=True) for i in (1, )]
-    # for t in th:
-    #     t.start()
-    #     print(f"{t.name} 스레드 시작됨")
-    # th = [threading.Thread(target=getData3, name=f"th_crawler_국제교류처", daemon=True) for i in (1, )]
-    # for t in th:
-    #     t.start()
-    #     print(f"{t.name} 스레드 시작됨")
+    #     th = [threading.Thread(target=getData, name=f"th_crawler_{i}", args=(i, ), daemon=True) for i in (0, 2, 3, 4)]
+    #     for t in th:
+    #         t.start()
+    #         print(f"{t.name} 스레드 시작됨")
+    #     th = [threading.Thread(target=getData2, name=f"th_crawler_knu", daemon=True) for i in (1, )]
+    #     for t in th:
+    #         t.start()
+    #         print(f"{t.name} 스레드 시작됨")
+    #     th = [threading.Thread(target=getData3, name=f"th_crawler_국제교류처", daemon=True) for i in (1, )]
+    #     for t in th:
+    #         t.start()
+    #         print(f"{t.name} 스레드 시작됨")
 
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CIN.settings')
